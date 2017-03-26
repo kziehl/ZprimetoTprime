@@ -3,25 +3,26 @@
 #include "../include/RLoader.h"
 
 RLoader* gRLoader;
+TChain* RLoader::fLoader{0};
 
 TChain* RLoader::GetTTbarFiles(void)
 {
 	fLoader = new TChain("MVATree","Chain with TTBar files");
-	fLoader->Add("/nfs/dust/cms/user/kziehl/processed_MC/ntuples/BKG_TTbar/MC*.root");
+	fLoader->Add("/nfs/dust/cms/user/kziehl/processed_MC/ntuples_3_26/BKG_TTbar/MC*.root");
 	return fLoader;
 }
 
 TChain* RLoader::GetZprimeFiles(void)
 {
 	fLoader = new TChain("MVATree","Chain with Zprime files");
-	fLoader->Add("/nfs/dust/cms/user/kziehl/processed_MC/ntuples/Signal_Zprime/Zprime*.root");
+	fLoader->Add("/nfs/dust/cms/user/kziehl/processed_MC/ntuples_3_26/Signal_Zprime/Zprime*.root");
 	return fLoader;
 }
 
 TChain* RLoader::GetQCDFiles(void)
 {
 	fLoader = new TChain("MVATree","Chain with QCD files");
-	fLoader->Add("/nfs/dust/cms/user/kziehl/processed_MC/ntuples/BKG_QCD/MC_QCD_HT_*.root");
+	fLoader->Add("/nfs/dust/cms/user/kziehl/processed_MC/ntuples_3_26/BKG_QCD/MC_QCD_HT_*.root");
 	return fLoader;
 }
 
