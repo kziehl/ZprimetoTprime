@@ -2,7 +2,7 @@
 #include <vector>
 #include <cstring>
 
-#include "TPaveText.h"
+#include "TText.h"
 #include "TLegend.h"
 #include "TLegendEntry.h"
 #include "TMath.h"
@@ -10,13 +10,16 @@
 #include "TH1F.h"
 #include "TObject.h"
 #include "TStyle.h"
+#include "TLatex.h"
 
 #include "../include/RStyle.h"
-//TODO:  how to set title of a plot? A: Use TPad
+//TODO:  how to set title of a plot? A: Use TPad //adapt to new canvas size
 
+RStyle* gRStyle;
 TCanvas* RStyle::fCanvas{0};
-TPaveText* RStyle::fPaveText{0};
+TText* RStyle::fText{0};
 TLegend* RStyle::fLegend{0};
+TLatex* RStyle::fLatex{0};
 
 const char* RStyle::fLeftDown="LeftDown";
 const char* RStyle::fLeftUp="LeftUp";
@@ -25,59 +28,39 @@ const char* RStyle::fRightUp="RightUp";
 
 void RStyle::PrintCrossSection(void)
 {
-	fPaveText = new TPaveText(0.67,0.87,0.9,0.97,"NB NDC");
-	fPaveText->SetFillStyle(3000);
-	fPaveText->SetLineColor(0);
-	fPaveText->SetTextSize(0.03);
-	fPaveText->SetTextFont(42);
-	fPaveText->SetTextAlign(31); //right and bottom adjusted
-	fPaveText->SetMargin(0);
-	fPaveText->AddText("2.69 fb^{-1} (13 TeV)"); //use TLatex
-	fPaveText->Draw("same");
+	fLatex = new TLatex();
+	fLatex->SetTextFont(42);
+	fLatex->SetTextSize(0.03);
+	fLatex->SetTextAlign(11); //left and bottom aligned
+	fLatex->DrawLatexNDC(0.1,0.92,"2.69 fb^{-1} (13TeV)");
 }
 
 void RStyle::PrintCMSPrivateWork(void)
 {
-	fPaveText = new TPaveText(0.7,0.87,0.88,0.97,"NB NDC");
-	fPaveText->SetFillStyle(3000);
-	fPaveText->SetLineColor(0);
-	fPaveText->SetTextSize(0.03);
-	fPaveText->SetTextFont(42);
-	fPaveText->SetTextAlign(31); //right and bottom adjusted
-	fPaveText->SetMargin(0);
-	fPaveText->AddText("CMS Private Work");
-	fPaveText->Draw("same");
+	fText = new TText();
+	fText->SetTextFont(42);
+	fText->SetTextSize(0.03);
+	fText->SetTextAlign(31); //right and bottom aligned
+	fText->DrawTextNDC(0.9,0.92,"CMS Private Work");
 }
 
 void RStyle::PrintCMSPreliminary(void)
 {
-	fPaveText = new TPaveText(0.175,0.78,0.35,0.88,"NB NDC");
-	fPaveText->SetFillStyle(3000);
-	fPaveText->SetLineColor(0);
-	fPaveText->SetTextSize(0.1);
-	fPaveText->SetTextFont(62);
-	fPaveText->AddText("CMS");
-	fPaveText->Draw("same");
-	fPaveText = new TPaveText(0.175,0.70,0.35,0.8,"NB NDC");
-	fPaveText->SetFillStyle(3000);
-	fPaveText->SetLineColor(0);
-	fPaveText->SetTextSize(0.04);
-	fPaveText->SetTextFont(42);
-	fPaveText->AddText("Preliminary");
-	fPaveText->Draw("same");
+	fLatex = new TLatex();
+	fLatex->SetTextAlign(13); //left and top aligned
+	fLatex->DrawLatexNDC(0.15,0.87,"#splitline{#font[42]{#scale[2.5]{#bf{CMS}}}}{#lower[0.2]{#font[42]{ Preliminary}}}");
 }
-
-TLegend* RStyle::PrintLegend(TH1F* histo,Int_t nrows,const char* descript,const char* option,const char* corner)
+//Trouble shooting: what happens if second entry is longer than first one? Arguments are not enlightful on second call.; how to set border size to zero?
+void RStyle::BuildLegend(TH1F* histo,const char* descript,const char* option,const char* corner,Int_t nrows)
 {
-	
 	TString tdescript = descript;
-	Double_t tlengthNDC = tdescript.Length()*0.02; //1 char(here Q) ~ 0.015 NDC
+	Double_t tlengthNDC = tdescript.Length()*0.015; //1 char(here Q) ~ 0.015 NDC
 	if(fLegend==0)
 	{
-		if(strcmp(corner,fLeftDown) == 0) fLegend = new TLegend(0.1,0.1,0.1+tlengthNDC,0.1+0.06*nrows);
-		if(strcmp(corner,fLeftUp) == 0) fLegend = new TLegend(0.1,0.9-0.06*nrows,0.1+tlengthNDC,0.9); 
-		if(strcmp(corner,fRightDown) == 0) fLegend = new TLegend(0.9-tlengthNDC,0.10,0.9,0.1+0.06*nrows); 
-		if(strcmp(corner,fRightUp) == 0) fLegend = new TLegend(0.9-tlengthNDC,0.9-0.06*nrows,0.9,0.9); //height of an entry ~ 0.06
+		if(strcmp(corner,fLeftDown) == 0) fLegend = new TLegend(0.1,0.1,0.1+tlengthNDC,0.1+0.07*nrows);
+		if(strcmp(corner,fLeftUp) == 0) fLegend = new TLegend(0.1,0.9-0.07*nrows,0.1+tlengthNDC,0.9); 
+		if(strcmp(corner,fRightDown) == 0) fLegend = new TLegend(0.9-tlengthNDC,0.10,0.9,0.1+0.07*nrows); 
+		if(strcmp(corner,fRightUp) == 0) fLegend = new TLegend(0.9-tlengthNDC,0.9-0.07*nrows,0.9,0.9); //height of an entry ~ 0.07
   	fLegend->SetBorderSize(0);
   	fLegend->SetMargin(0.2); 
   	fLegend->SetFillStyle(3000);
@@ -85,7 +68,6 @@ TLegend* RStyle::PrintLegend(TH1F* histo,Int_t nrows,const char* descript,const 
   }
 	fLegend->AddEntry(histo,descript,option);
 	fLegend->Draw();
-	return fLegend;
 }
 
 TCanvas* RStyle::PrintCanvasTH1F(TH1F* histo,const char* title,const char* xaxistitle,const char* yaxistitle,const char* option)
@@ -110,8 +92,8 @@ TCanvas* RStyle::PrintCanvasTH1F(TH1F* histo,const char* title,const char* xaxis
   histo->Draw(option);
   return fCanvas;
 }
-/*
-void RStyle::SetGlobalStyle (void);
+
+void RStyle::SetGlobalStyle (void)
 {
  // Suppress message when canvas has been saved
   //gErrorIgnoreLevel = 1001;
@@ -126,7 +108,7 @@ void RStyle::SetGlobalStyle (void);
   gStyle->SetCanvasDefW(800); //Width of canvas
   gStyle->SetCanvasDefX(0);   //Position on screen
   gStyle->SetCanvasDefY(0);
-  
+ /* 
   //  For the frame
   gStyle->SetFrameBorderMode(0);
   gStyle->SetFrameBorderSize(10);
@@ -144,20 +126,20 @@ void RStyle::SetGlobalStyle (void);
   gStyle->SetPadGridY(false);
   gStyle->SetGridColor(0);
   gStyle->SetGridStyle(3);
-  gStyle->SetGridWidth(1);
+  gStyle->SetGridWidth(1);*/
   
   //  Margins
-  gStyle->SetPadTopMargin(0.08);
-  gStyle->SetPadBottomMargin(0.15);
-  gStyle->SetPadLeftMargin(0.18);
-  gStyle->SetPadRightMargin(0.05);
+  gStyle->SetPadTopMargin(0.1);
+  gStyle->SetPadBottomMargin(0.1);
+  gStyle->SetPadLeftMargin(0.1);
+  gStyle->SetPadRightMargin(0.1);
 
   //  For the histo:
-  //gStyle->SetHistLineColor(kBlack);
+  gStyle->SetHistLineColor(kBlack);
   //gStyle->SetHistLineStyle(0);
-  //gStyle->SetHistLineWidth(2);
-  //gStyle->SetMarkerSize(1.2);
-  //gStyle->SetEndErrorSize(4);
+  gStyle->SetHistLineWidth(2);
+  gStyle->SetMarkerSize(1.2);
+  gStyle->SetEndErrorSize(4);
   //gStyle->SetHatchesLineWidth(1);
 
   //  For the statistics box:
@@ -183,6 +165,6 @@ void RStyle::SetGlobalStyle (void);
   //gStyle->SetTitleYOffset(1.9);
 
   //  For the legend
-  //gStyle->SetLegendBorderSize(0); 
+  gStyle->SetLegendBorderSize(0); 
 }
-*/
+

@@ -24,5 +24,6 @@ class RUtil
 					
 };
 
+extern RUtil *gRUtil;
 
 #endif

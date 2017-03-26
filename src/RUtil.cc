@@ -11,6 +11,7 @@
 #include "../include/RUtil.h"
 #include "../include/RStyle.h"
 
+RUtil* gRUtil;
 
 Double_t RUtil::GetYMaxOfList (const std::vector<TH1F*>& histo)
 {
@@ -57,11 +58,11 @@ void RUtil::PrintRatioPlot(TH1F* histo1,TH1F* histo2)
 	TCanvas* c1 = new TCanvas("c1","c1",0,0,800,800);
 	//histo1->Sumw2();
 	TRatioPlot* Ratio = new TRatioPlot(histo1,histo2);
-	Ratio->SetSeparationMargin(0);
-	Ratio->SetGraphDrawOpt("hist");
-	Ratio->GetXaxis()->SetRangeUser(0,5000);
+	//Ratio->SetSeparationMargin(0);
+	//Ratio->SetGraphDrawOpt("hist");
+	//Ratio->GetXaxis()->SetRangeUser(0,5000);
 	Ratio->Draw("same");
-	Ratio->GetLowerRefGraph()->SetMinimum(-2);
-	Ratio->GetLowerRefGraph()->SetMaximum(2);
+	//Ratio->GetLowerRefGraph()->SetMinimum(-2);
+	//Ratio->GetLowerRefGraph()->SetMaximum(2);
 }
 

@@ -6,13 +6,14 @@
 class RLoader
 {
 	private:
-					TChain *fLoader;
+					static TChain *fLoader;
 	public:
 					RLoader(){};
-					TChain* GetTTbarFiles(void);
-					TChain* GetZprimeFiles(void);
-					TChain* GetQCDFiles(void);
+					static TChain* GetTTbarFiles(void);
+					static TChain* GetZprimeFiles(void);
+					static TChain* GetQCDFiles(void);
 };
 
+extern RLoader* gRLoader;
 
 #endif

@@ -29,41 +29,52 @@ int main()
 	// Root file in which the histograms will be saved
 	TFile *file = new TFile("/nfs/dust/cms/user/kziehl/plots/Zprime/BKG_Estimation/rootfiles/ZprimeM_Different_Cases.root","RECREATE");
 	//Load data files
-	RLoader BKGTTbar,BKGQCD,SignalZprime;
-	//TChain *TTbar = BKGTTbar.GetTTbarFiles();
+	//TChain *TTbar = RLoader::GetTTbarFiles();
 	//std::cout << "Number of Entries in TTbar: " << TTbar->GetEntries() << std::endl;
-	TChain	*QCD = BKGQCD.GetQCDFiles();
+	TChain	*QCD = RLoader::GetQCDFiles();
 	std::cout << "Number of Entries in QCD: " << QCD->GetEntries() << std::endl;
-	//TChain	*Zprime = SignalZprime.GetZprimeFiles(); 
+	//TChain	*Zprime = RLoader::GetZprimeFiles(); 
 	//std::cout << "Number of Entries in Zprime: " << Zprime->GetEntries() << std::endl;
-	//TChain *TotalBKG = BKGTTbar.GetTTbarFiles();
+	//TChain *TotalBKG = RLoader::GetTTbarFiles();
 	//std::cout << TotalBKG->GetEntries() << std::endl;
 	//TotalBKG->Add(QCD);
   //std::cout << "Nummber of Entries in the whole Background: " << TotalBKG->GetEntries() << std::endl;
   
+  
   //variables
   Float_t Weight_XS{0},TTM_Zprime_M{0},TTM_Mistagrate{0},TTM_separated_highest_bottoms_M{0},TTM_AK8_top_candidates_highest_M{0},TTM_highest_Ws_M{0},TTM_no_top_separated_highest_bottoms_M{0},TTM_no_top_Zprime_M{0},Signal_Topfirst_Zprime_M{0};
   
+  
   //Set branches
   QCD->SetBranchStatus("*",0);
+  
   QCD->SetBranchStatus("Weight_XS",1);  
   QCD->SetBranchAddress("Weight_XS",&Weight_XS);
+  
   QCD->SetBranchStatus("TTM_Mistagrate",1);  
   QCD->SetBranchAddress("TTM_Mistagrate",&TTM_Mistagrate);
+  
   QCD->SetBranchStatus("TTM_Zprime_M",1);  
   QCD->SetBranchAddress("TTM_Zprime_M",&TTM_Zprime_M);
+  
   QCD->SetBranchStatus("TTM_separated_highest_bottoms_M",1);  
   QCD->SetBranchAddress("TTM_separated_highest_bottoms_M",&TTM_separated_highest_bottoms_M);
+  
   QCD->SetBranchStatus("TTM_AK8_top_candidates_highest_M",1);  
   QCD->SetBranchAddress("TTM_AK8_top_candidates_highest_M",&TTM_AK8_top_candidates_highest_M);
+  
   QCD->SetBranchStatus("TTM_highest_Ws_M",1);  
   QCD->SetBranchAddress("TTM_highest_Ws_M",&TTM_highest_Ws_M);
+  
   QCD->SetBranchStatus("TTM_no_top_separated_highest_bottoms_M",1);  
   QCD->SetBranchAddress("TTM_no_top_separated_highest_bottoms_M",&TTM_no_top_separated_highest_bottoms_M);
+  
   QCD->SetBranchStatus("TTM_no_top_Zprime_M",1);  
   QCD->SetBranchAddress("TTM_no_top_Zprime_M",&TTM_no_top_Zprime_M);
+  
   QCD->SetBranchStatus("Signal_Topfirst_Zprime_M",1);
   QCD->SetBranchAddress("Signal_Topfirst_Zprime_M",&Signal_Topfirst_Zprime_M);
+  
   
   //creating histograms
   TH1F* hZmass = new TH1F("hZmass","M(Z') Background",30,0,5000);
@@ -96,6 +107,7 @@ int main()
       std::cout << "Processing Event Number   " << iEntry << std::endl;
      }
    }
+
 
 	//Write and save
   file->cd();

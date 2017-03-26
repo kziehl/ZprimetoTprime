@@ -2,6 +2,7 @@
 
 #include "../include/RLoader.h"
 
+RLoader* gRLoader;
 
 TChain* RLoader::GetTTbarFiles(void)
 {
