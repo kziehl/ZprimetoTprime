@@ -55,14 +55,14 @@ Double_t RUtil::GetMaxValOfVar (TChain* chain, const char* variable, const char*
 
 void RUtil::PrintRatioPlot(TH1F* histo1,TH1F* histo2)
 {
-	TCanvas* c1 = new TCanvas("c1","c1",0,0,800,800);
-	//histo1->Sumw2();
+	TCanvas* c1 = new TCanvas("c1","Ratioplots",0,0,800,800);
 	TRatioPlot* Ratio = new TRatioPlot(histo1,histo2);
-	//Ratio->SetSeparationMargin(0);
-	//Ratio->SetGraphDrawOpt("hist");
-	//Ratio->GetXaxis()->SetRangeUser(0,5000);
+	Ratio->SetSeparationMargin(0);
+	histo1->SetTitle("");
+	histo1->GetXaxis()->SetTitle("m(Z') in GeV");
+	histo1->GetYaxis()->SetTitle("Events");
 	Ratio->Draw("same");
-	//Ratio->GetLowerRefGraph()->SetMinimum(-2);
-	//Ratio->GetLowerRefGraph()->SetMaximum(2);
+	Ratio->GetLowerRefGraph()->SetMinimum(-1);
+	Ratio->GetLowerRefGraph()->SetMaximum(2);
 }
 
