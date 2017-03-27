@@ -53,16 +53,30 @@ Double_t RUtil::GetMaxValOfVar (TChain* chain, const char* variable, const char*
     return MaxVal;
 }
 
-void RUtil::PrintRatioPlot(TH1F* histo1,TH1F* histo2)
+TRatioPlot* RUtil::PrintRatioPlot(TH1F* histo1,TH1F* histo2)
 {
-	TCanvas* c1 = new TCanvas("c1","Ratioplots",0,0,800,800);
-	TRatioPlot* Ratio = new TRatioPlot(histo1,histo2);
-	Ratio->SetSeparationMargin(0);
+	TCanvas *c1 = new TCanvas();
+	c1->SetTicks(0,1);
+	TRatioPlot* Ratio = new TRatioPlot(histo1,histo2,"divsym");
+	// hist style
 	histo1->SetTitle("");
+	histo1->SetStats(false);
+	histo1->SetLineWidth(2);
+	histo1->SetLineColor(4);
 	histo1->GetXaxis()->SetTitle("m(Z') in GeV");
 	histo1->GetYaxis()->SetTitle("Events");
-	Ratio->Draw("same");
-	Ratio->GetLowerRefGraph()->SetMinimum(-1);
-	Ratio->GetLowerRefGraph()->SetMaximum(2);
+	histo2->SetLineWidth(2);
+	histo2->SetLineColor(2);
+	//Ratio Style
+	Ratio->SetSeparationMargin(0.05);
+	Ratio->SetH2DrawOpt("hist");
+	Ratio->Draw();
+	Ratio->GetLowerRefGraph()->SetMinimum(0.5);
+	Ratio->GetLowerRefGraph()->SetMaximum(1.2);
+	Ratio->GetLowerRefGraph()->SetLineColor(1);
+	Ratio->GetUpperPad()->cd();
+	gRStyle->PrintCrossSection();
+	gRStyle->PrintCMSPrivateWork();
+	return Ratio;
 }
 

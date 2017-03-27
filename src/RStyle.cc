@@ -26,14 +26,16 @@ const char* RStyle::fLeftUp="LeftUp";
 const char* RStyle::fRightDown="RightDown";
 const char* RStyle::fRightUp="RightUp";
 
+
 void RStyle::PrintCrossSection(void)
 {
 	fLatex = new TLatex();
 	fLatex->SetTextFont(42);
 	fLatex->SetTextSize(0.03);
 	fLatex->SetTextAlign(11); //left and bottom aligned
-	fLatex->DrawLatexNDC(0.1,0.92,"2.69 fb^{-1} (13TeV)");
+	fLatex->DrawLatexNDC(gStyle->GetPadLeftMargin(),1-gStyle->GetPadTopMargin()+0.02,"2.69 fb^{-1} (13TeV)");
 }
+
 
 void RStyle::PrintCMSPrivateWork(void)
 {
@@ -41,34 +43,42 @@ void RStyle::PrintCMSPrivateWork(void)
 	fText->SetTextFont(42);
 	fText->SetTextSize(0.03);
 	fText->SetTextAlign(31); //right and bottom aligned
-	fText->DrawTextNDC(0.9,0.92,"CMS Private Work");
+	fText->DrawTextNDC(1-gStyle->GetPadRightMargin(),1-gStyle->GetPadTopMargin()+0.02,"CMS Private Work");
 }
+
 
 void RStyle::PrintCMSPreliminary(void)
 {
 	fLatex = new TLatex();
 	fLatex->SetTextAlign(13); //left and top aligned
-	fLatex->DrawLatexNDC(0.15,0.87,"#splitline{#font[42]{#scale[2.5]{#bf{CMS}}}}{#lower[0.2]{#font[42]{ Preliminary}}}");
+	fLatex->DrawLatexNDC(gStyle->GetPadLeftMargin()+0.05,1-gStyle->GetPadTopMargin()-0.02,"#splitline{#font[42]{#scale[2.5]{#bf{CMS}}}}{#lower[0.2]{#font[42]{ Preliminary}}}");
 }
-//Trouble shooting: what happens if second entry is longer than first one? Arguments are not enlightful on second call.; how to set border size to zero?
+
+
 void RStyle::BuildLegend(TH1F* histo,const char* descript,const char* option,const char* corner,Int_t nrows)
 {
 	TString tdescript = descript;
 	Double_t tlengthNDC = tdescript.Length()*0.015; //1 char(here Q) ~ 0.015 NDC
 	if(fLegend==0)
 	{
-		if(strcmp(corner,fLeftDown) == 0) fLegend = new TLegend(0.1,0.1,0.1+tlengthNDC,0.1+0.07*nrows);
-		if(strcmp(corner,fLeftUp) == 0) fLegend = new TLegend(0.1,0.9-0.07*nrows,0.1+tlengthNDC,0.9); 
-		if(strcmp(corner,fRightDown) == 0) fLegend = new TLegend(0.9-tlengthNDC,0.10,0.9,0.1+0.07*nrows); 
-		if(strcmp(corner,fRightUp) == 0) fLegend = new TLegend(0.9-tlengthNDC,0.9-0.07*nrows,0.9,0.9); //height of an entry ~ 0.07
+		if(strcmp(corner,fLeftDown) == 0) fLegend = new TLegend(gStyle->GetPadLeftMargin(),gStyle->GetPadBottomMargin(),gStyle->GetPadLeftMargin()+tlengthNDC,gStyle->GetPadBottomMargin()+0.07*nrows);
+		if(strcmp(corner,fLeftUp) == 0) fLegend = new TLegend(gStyle->GetPadLeftMargin(),1-gStyle->GetPadTopMargin()-0.07*nrows,gStyle->GetPadLeftMargin()+tlengthNDC,1-gStyle->GetPadTopMargin()); 
+		if(strcmp(corner,fRightDown) == 0) fLegend = new TLegend(1-gStyle->GetPadRightMargin()-tlengthNDC,gStyle->GetPadBottomMargin(),1-gStyle->GetPadRightMargin(),gStyle->GetPadBottomMargin()+0.07*nrows); 
+		if(strcmp(corner,fRightUp) == 0) fLegend = new TLegend(1-gStyle->GetPadRightMargin()-tlengthNDC,1-gStyle->GetPadTopMargin()-0.07*nrows,1-gStyle->GetPadRightMargin(),1-gStyle->GetPadTopMargin()); //height of an entry ~ 0.07
+		
   	fLegend->SetBorderSize(0);
-  	fLegend->SetMargin(0.2); 
-  	fLegend->SetFillStyle(3000);
+  	fLegend->SetLineStyle(1);
+  	fLegend->SetLineWidth(1);
+  	fLegend->SetLineColor(1);
+  	fLegend->SetMargin(0.2);  //Distance between Left end and entry text
+  	fLegend->SetFillStyle(0); //hollow
+  	fLegend->SetFillColor(0);
   	fLegend->SetTextSize(0.03);
   }
 	fLegend->AddEntry(histo,descript,option);
 	fLegend->Draw();
 }
+
 
 TCanvas* RStyle::PrintCanvasTH1F(TH1F* histo,const char* title,const char* xaxistitle,const char* yaxistitle,const char* option)
 {
@@ -108,25 +118,25 @@ void RStyle::SetGlobalStyle (void)
   gStyle->SetCanvasDefW(800); //Width of canvas
   gStyle->SetCanvasDefX(0);   //Position on screen
   gStyle->SetCanvasDefY(0);
- /* 
+  
   //  For the frame
   gStyle->SetFrameBorderMode(0);
-  gStyle->SetFrameBorderSize(10);
-  gStyle->SetFrameFillColor(kBlack);
+  gStyle->SetFrameBorderSize(1); //unenabled if BorderMode is
+  gStyle->SetFrameFillColor(0);
   gStyle->SetFrameFillStyle(0);
-  gStyle->SetFrameLineColor(kBlack);
+  gStyle->SetFrameLineColor(1); // 0 white 1 black 2 red 4 blue
   gStyle->SetFrameLineStyle(0);
-  gStyle->SetFrameLineWidth(2);
-  gStyle->SetLineWidth(3);
+  gStyle->SetFrameLineWidth(1);
+  gStyle->SetLineWidth(1);
     
-  //  For the Pad
+/*    For the Pad 
   gStyle->SetPadBorderMode(0);
   gStyle->SetPadColor(kWhite);
   gStyle->SetPadGridX(false);
   gStyle->SetPadGridY(false);
   gStyle->SetGridColor(0);
   gStyle->SetGridStyle(3);
-  gStyle->SetGridWidth(1);*/
+  gStyle->SetGridWidth(1); */
   
   //  Margins
   gStyle->SetPadTopMargin(0.1);
@@ -135,34 +145,34 @@ void RStyle::SetGlobalStyle (void)
   gStyle->SetPadRightMargin(0.1);
 
   //  For the histo:
-  gStyle->SetHistLineColor(kBlack);
-  //gStyle->SetHistLineStyle(0);
+  gStyle->SetHistLineColor(1);
+  gStyle->SetHistLineStyle(0);
   gStyle->SetHistLineWidth(2);
   gStyle->SetMarkerSize(1.2);
   gStyle->SetEndErrorSize(4);
-  //gStyle->SetHatchesLineWidth(1);
+  //gStyle->SetHatchesLineWidth(1); // unknown action
 
   //  For the statistics box:
   gStyle->SetOptStat(0);
   
-  //  For the axis
- // gStyle->SetAxisColor(1,"XYZ");
-  //gStyle->SetTickLength(0.03,"XYZ");
-  //gStyle->SetNdivisions(510,"XYZ");
-  //gStyle->SetPadTickX(1);
-  //gStyle->SetPadTickY(1);
-  //gStyle->SetStripDecimals(kFALSE);
+//    For the axis
+	gStyle->SetAxisColor(1,"XYZ");
+  gStyle->SetTickLength(0.03,"XYZ");
+  gStyle->SetNdivisions(510,"XYZ");
+  gStyle->SetPadTickX(0);
+  gStyle->SetPadTickY(0);
+  gStyle->SetStripDecimals(kFALSE);
   
   //  For the axis labels and titles
-  //gStyle->SetTitleColor(1,"XYZ");
-  //gStyle->SetLabelColor(1,"XYZ");
-  //gStyle->SetLabelFont(42,"XYZ");
-  //gStyle->SetLabelOffset(0.007,"XYZ");
-  //gStyle->SetLabelSize(0.04,"XYZ");
-  //gStyle->SetTitleFont(42,"XYZ");
-  //gStyle->SetTitleSize(0.047,"XYZ");
-  //gStyle->SetTitleXOffset(1.5);
-  //gStyle->SetTitleYOffset(1.9);
+  gStyle->SetTitleColor(1,"XYZ");
+  gStyle->SetLabelColor(1,"XYZ");
+  gStyle->SetLabelFont(42,"XYZ");
+  gStyle->SetLabelOffset(0.005,"XYZ");
+  gStyle->SetLabelSize(0.04,"XYZ");
+  gStyle->SetTitleFont(42,"XYZ");
+  gStyle->SetTitleSize(0.04,"XYZ");
+  gStyle->SetTitleXOffset(1);
+  gStyle->SetTitleYOffset(5);
 
   //  For the legend
   gStyle->SetLegendBorderSize(0); 
