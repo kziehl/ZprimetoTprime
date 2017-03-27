@@ -30,7 +30,7 @@ class RStyle
 		static void BuildLegend (TH1F* histo,const char* descript="",const char* option="l",const char* corner="RightUp",Int_t nrows=1);
 		//still in progress
 		TCanvas* PrintCanvasTH1F (TH1F* histo,const char* title="",const char* xaxistitle="",const char* yaxistitle="",const char* option="");
-		//sets default style for Canvas,Pad,Frame,Legend,Axis
+		//sets default style for Canvas,Pad,Frame,Legend,Axis. Not recommended if using RUtil::PrintRatioPlot.
 		static void SetGlobalStyle (void);
 					
 							

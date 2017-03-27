@@ -71,6 +71,12 @@ int main()
 	//TH1F* hWmass = new TH1F("hWmass","Massdistriubtion of W-Bosons with the highest p_{T}",15,0,150);
 	//TH1F* hbotmassnotop = new TH1F("hbotmassnotop","Massdistriubtion of b-Quarks with the highest p_{T} without top tag",15,0,150);
   
+  
+  //store sum of squares of weights
+  hZmass->Sumw2();
+  hZmassTopfirst->Sumw2();
+  hZmassnotop->Sumw2();
+  
  
  	// sum over entries and fill histogramms
   Long64_t Nentries = chain->GetEntries();

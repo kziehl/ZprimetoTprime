@@ -55,6 +55,7 @@ Double_t RUtil::GetMaxValOfVar (TChain* chain, const char* variable, const char*
 
 void RUtil::PrintRatioPlot(TH1F* histo1,TH1F* histo2)
 {
+	gStyle->SetEndErrorSize(2);
 	TCanvas *c1 = new TCanvas();
 	c1->SetTicks(0,0);
 	TRatioPlot* Ratio = new TRatioPlot(histo1,histo2,"divsym");
@@ -69,7 +70,8 @@ void RUtil::PrintRatioPlot(TH1F* histo1,TH1F* histo2)
 	histo2->SetLineColor(2); // red
 	//Ratio Style
 	Ratio->SetSeparationMargin(0.05);
-	Ratio->SetH2DrawOpt("hist");
+	Ratio->SetH2DrawOpt("histe1");
+	Ratio->SetH1DrawOpt("histe1");
 	Ratio->Draw();
 	Ratio->GetLowerRefGraph()->SetMinimum(0.5);
 	Ratio->GetLowerRefGraph()->SetMaximum(1.5);

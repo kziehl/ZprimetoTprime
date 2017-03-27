@@ -70,7 +70,7 @@ void RStyle::BuildLegend(TH1F* histo,const char* descript,const char* option,con
   	fLegend->SetLineStyle(1);
   	fLegend->SetLineWidth(1);
   	fLegend->SetLineColor(1);
-  	fLegend->SetMargin(0.2);  //Distance between Left end and entry text
+  	fLegend->SetMargin(0.2);  //Distance between Left end of the box and entrytext
   	fLegend->SetFillStyle(0); //hollow
   	fLegend->SetFillColor(0);
   	fLegend->SetTextSize(0.04);
@@ -79,7 +79,7 @@ void RStyle::BuildLegend(TH1F* histo,const char* descript,const char* option,con
 	fLegend->Draw();
 }
 
-
+// match this function with SetGlobalStyle
 TCanvas* RStyle::PrintCanvasTH1F(TH1F* histo,const char* title,const char* xaxistitle,const char* yaxistitle,const char* option)
 {
 	fCanvas = new TCanvas("Canvas",title,0,0,800,800);
@@ -103,6 +103,7 @@ TCanvas* RStyle::PrintCanvasTH1F(TH1F* histo,const char* title,const char* xaxis
   return fCanvas;
 }
 
+//TODO:still causes some unexpected behavior
 void RStyle::SetGlobalStyle (void)
 {
  // Suppress message when canvas has been saved
