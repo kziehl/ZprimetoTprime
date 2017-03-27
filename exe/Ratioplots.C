@@ -21,7 +21,7 @@ void Ratioplots()
 	h1->Scale(1/h1->Integral());
 	h2->Scale(1/h2->Integral());
 	
-	auto ratio = gRUtil->PrintRatioPlot(h1,h2);
+	gRUtil->PrintRatioPlot(h1,h2);
 	//gRUtil->PrintRatioPlot(h1,h3);
 	//gRUtil->PrintRatioPlot(h3,h2);
 	//h1->SetTitle("A simple Ratio");

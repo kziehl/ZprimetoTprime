@@ -61,10 +61,10 @@ void RStyle::BuildLegend(TH1F* histo,const char* descript,const char* option,con
 	Double_t tlengthNDC = tdescript.Length()*0.015; //1 char(here Q) ~ 0.015 NDC
 	if(fLegend==0)
 	{
-		if(strcmp(corner,fLeftDown) == 0) fLegend = new TLegend(gStyle->GetPadLeftMargin(),gStyle->GetPadBottomMargin(),gStyle->GetPadLeftMargin()+tlengthNDC,gStyle->GetPadBottomMargin()+0.07*nrows);
-		if(strcmp(corner,fLeftUp) == 0) fLegend = new TLegend(gStyle->GetPadLeftMargin(),1-gStyle->GetPadTopMargin()-0.07*nrows,gStyle->GetPadLeftMargin()+tlengthNDC,1-gStyle->GetPadTopMargin()); 
-		if(strcmp(corner,fRightDown) == 0) fLegend = new TLegend(1-gStyle->GetPadRightMargin()-tlengthNDC,gStyle->GetPadBottomMargin(),1-gStyle->GetPadRightMargin(),gStyle->GetPadBottomMargin()+0.07*nrows); 
-		if(strcmp(corner,fRightUp) == 0) fLegend = new TLegend(1-gStyle->GetPadRightMargin()-tlengthNDC,1-gStyle->GetPadTopMargin()-0.07*nrows,1-gStyle->GetPadRightMargin(),1-gStyle->GetPadTopMargin()); //height of an entry ~ 0.07
+		if(strcmp(corner,fLeftDown) == 0) fLegend = new TLegend(gStyle->GetPadLeftMargin(),gStyle->GetPadBottomMargin(),gStyle->GetPadLeftMargin()+tlengthNDC,gStyle->GetPadBottomMargin()+0.08*nrows);
+		if(strcmp(corner,fLeftUp) == 0) fLegend = new TLegend(gStyle->GetPadLeftMargin(),1-gStyle->GetPadTopMargin()-0.08*nrows,gStyle->GetPadLeftMargin()+tlengthNDC,1-gStyle->GetPadTopMargin()); 
+		if(strcmp(corner,fRightDown) == 0) fLegend = new TLegend(1-gStyle->GetPadRightMargin()-tlengthNDC,gStyle->GetPadBottomMargin(),1-gStyle->GetPadRightMargin(),gStyle->GetPadBottomMargin()+0.08*nrows); 
+		if(strcmp(corner,fRightUp) == 0) fLegend = new TLegend(1-gStyle->GetPadRightMargin()-tlengthNDC,1-gStyle->GetPadTopMargin()-0.08*nrows,1-gStyle->GetPadRightMargin(),1-gStyle->GetPadTopMargin()); //height of an entry ~ 0.07
 		
   	fLegend->SetBorderSize(0);
   	fLegend->SetLineStyle(1);
@@ -73,7 +73,7 @@ void RStyle::BuildLegend(TH1F* histo,const char* descript,const char* option,con
   	fLegend->SetMargin(0.2);  //Distance between Left end and entry text
   	fLegend->SetFillStyle(0); //hollow
   	fLegend->SetFillColor(0);
-  	fLegend->SetTextSize(0.03);
+  	fLegend->SetTextSize(0.04);
   }
 	fLegend->AddEntry(histo,descript,option);
 	fLegend->Draw();

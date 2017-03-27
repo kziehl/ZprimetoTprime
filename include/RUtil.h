@@ -20,7 +20,7 @@ class RUtil
 		/*return the max value of a variable stored in an array with a certain length. Todo: Loop over all events is not practical */
 		Double_t GetMaxValOfVar (TChain* chain, const char* variable, const char* length);
 		/* create a Ratio Plot with statistical errors */
-	 static TRatioPlot* PrintRatioPlot (TH1F* histo1,TH1F* histo2);
+	 static void PrintRatioPlot (TH1F* histo1,TH1F* histo2);
 			
 					
 };
