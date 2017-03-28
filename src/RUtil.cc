@@ -52,7 +52,7 @@ Double_t RUtil::GetMaxValOfVar (TChain* chain, const char* variable, const char*
     }
     return MaxVal;
 }
-
+//TODO: How to change labels?
 void RUtil::PrintRatioPlot(TH1F* histo1,TH1F* histo2)
 {
 	gStyle->SetEndErrorSize(2);
@@ -69,7 +69,7 @@ void RUtil::PrintRatioPlot(TH1F* histo1,TH1F* histo2)
 	histo2->SetLineWidth(2);
 	histo2->SetLineColor(2); // red
 	//Ratio Style
-	Ratio->SetSeparationMargin(0.05);
+	Ratio->SetSeparationMargin(0);
 	Ratio->SetH2DrawOpt("histe1");
 	Ratio->SetH1DrawOpt("histe1");
 	Ratio->Draw();
@@ -77,13 +77,14 @@ void RUtil::PrintRatioPlot(TH1F* histo1,TH1F* histo2)
 	Ratio->GetLowerRefGraph()->SetMinimum(0.5);
 	Ratio->GetLowerRefGraph()->SetMaximum(1.5);
 	Ratio->GetLowerRefGraph()->SetLineColor(1);
-	Ratio->GetLowYaxis()->SetNdivisions(505); 
+	Ratio->GetLowYaxis()->SetNdivisions(5,true); 
+	//Ratio->GetLowerRefYaxis()->ChangeLabel(1,-1,0);
 	//Number of grid lines
 	std::vector<double> lines = {1};
 	Ratio->SetGridlines(lines);
 	// Style
 	Ratio->GetUpperPad()->cd();
 	gRStyle->PrintCrossSection();
-	gRStyle->PrintCMSPrivateWork();
+	gRStyle->PrintCMSPublicationStatus("Private Work");
 }
 

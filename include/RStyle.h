@@ -6,6 +6,7 @@
 #include "TText.h"
 #include "TLatex.h"
 #include "TObject.h"
+#include "TString.h"
 
 class RStyle
 {
@@ -22,8 +23,8 @@ class RStyle
 		RStyle(){};
 		//prints CMS Private Work above the upper right corner of the frame
 		static void PrintCMSPrivateWork (void);
-		//prints CMS Preliminary in the top left corner below the frame 
-		static void PrintCMSPreliminary (void);
+		//prints CMS in the top left corner below the frame. Below it will be the publication status.
+		static void PrintCMSPublicationStatus (TString status="Private Work");
 		//prints the current Luminosity above the top left corner of the frame
 		static void PrintCrossSection (void);
 		//draws a legend in the desired corner.The options are RightUp,RightDown,LeftUp,LeftDown. By the first call of the function the number of rows and the longest entry must be known to initialize the legend. If now description is specified the title of the histogram is used by default.

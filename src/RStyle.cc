@@ -31,10 +31,10 @@ void RStyle::PrintCrossSection(void)
 {
 	fLatex = new TLatex();
 	fLatex->SetTextFont(42);
-	fLatex->SetTextSize(0.03);
-	fLatex->SetTextAlign(11); //left and bottom aligned
-	fLatex->DrawLatexNDC(gStyle->GetPadLeftMargin(),1-gStyle->GetPadTopMargin()+0.02,"2.69 fb^{-1} (13TeV)");
-	//fLatex->DrawLatexNDC(1-gStyle->GetPadRightMargin(),1-gStyle->GetPadTopMargin()+0.02,"2.69 fb^{-1} (13TeV)");
+	fLatex->SetTextSize(0.04);
+	fLatex->SetTextAlign(31); //left and bottom aligned
+	//fLatex->DrawLatexNDC(gStyle->GetPadLeftMargin(),1-gStyle->GetPadTopMargin()+0.02,"2.69 fb^{-1} (13TeV)");
+	fLatex->DrawLatexNDC(1-gStyle->GetPadRightMargin(),1-gStyle->GetPadTopMargin()+0.02,"2.69 fb^{-1} (13TeV)");
 }
 
 
@@ -48,11 +48,13 @@ void RStyle::PrintCMSPrivateWork(void)
 }
 
 
-void RStyle::PrintCMSPreliminary(void)
-{
+void RStyle::PrintCMSPublicationStatus(TString status)
+{	 
+	TString tStr = "#splitline{#font[42]{#scale[2.5]{#bf{CMS}}}}{#lower[0.2]{#font[42]{replace}}}";
+	tStr.ReplaceAll("replace",status);
 	fLatex = new TLatex();
 	fLatex->SetTextAlign(13); //left and top aligned
-	fLatex->DrawLatexNDC(gStyle->GetPadLeftMargin()+0.05,1-gStyle->GetPadTopMargin()-0.02,"#splitline{#font[42]{#scale[2.5]{#bf{CMS}}}}{#lower[0.2]{#font[42]{ Preliminary}}}");
+	fLatex->DrawLatexNDC(gStyle->GetPadLeftMargin()+0.05,1-gStyle->GetPadTopMargin()-0.02,tStr);
 }
 
 
