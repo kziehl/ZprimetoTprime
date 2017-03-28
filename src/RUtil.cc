@@ -73,9 +73,15 @@ void RUtil::PrintRatioPlot(TH1F* histo1,TH1F* histo2)
 	Ratio->SetH2DrawOpt("histe1");
 	Ratio->SetH1DrawOpt("histe1");
 	Ratio->Draw();
+	// style of graph
 	Ratio->GetLowerRefGraph()->SetMinimum(0.5);
 	Ratio->GetLowerRefGraph()->SetMaximum(1.5);
 	Ratio->GetLowerRefGraph()->SetLineColor(1);
+	Ratio->GetLowYaxis()->SetNdivisions(505); 
+	//Number of grid lines
+	std::vector<double> lines = {1};
+	Ratio->SetGridlines(lines);
+	// Style
 	Ratio->GetUpperPad()->cd();
 	gRStyle->PrintCrossSection();
 	gRStyle->PrintCMSPrivateWork();

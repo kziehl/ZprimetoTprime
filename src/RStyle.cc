@@ -34,6 +34,7 @@ void RStyle::PrintCrossSection(void)
 	fLatex->SetTextSize(0.03);
 	fLatex->SetTextAlign(11); //left and bottom aligned
 	fLatex->DrawLatexNDC(gStyle->GetPadLeftMargin(),1-gStyle->GetPadTopMargin()+0.02,"2.69 fb^{-1} (13TeV)");
+	//fLatex->DrawLatexNDC(1-gStyle->GetPadRightMargin(),1-gStyle->GetPadTopMargin()+0.02,"2.69 fb^{-1} (13TeV)");
 }
 
 
