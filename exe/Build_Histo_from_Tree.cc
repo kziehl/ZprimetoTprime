@@ -19,7 +19,7 @@ using namespace std;
 int main()
 {
 	// create root file in which the histograms will be saved
-	TFile *file = new TFile("/nfs/dust/cms/user/kziehl/plots/bkg_estimation/rootfile/zprimeM_Ratio_Plots.root","RECREATE");
+	TFile *file = new TFile("/nfs/dust/cms/user/kziehl/plots/bkg_estimation/rootfile/analysis_QCD.root","RECREATE");
 	
 	
 	//Load data files
@@ -28,7 +28,7 @@ int main()
 
   
   //variables
-  Float_t Weight_XS{0},TTM_Zprime_M{0},TTM_Mistagrate{0},TTM_separated_highest_bottoms_M{0},TTM_AK8_top_candidates_highest_M{0},TTM_highest_Ws_M{0},TTM_no_top_separated_highest_bottoms_M{0},TTM_no_top_Zprime_M{0},Signal_Topfirst_Zprime_M{0};
+  Float_t Weight_XS{0},TTM_Zprime_M{0},TTM_Mistagrate{0},TTM_separated_highest_bottoms_M{0},TTM_AK8_top_candidates_highest_M{0},TTM_highest_Ws_M{0},TTM_no_top_separated_highest_bottoms_M{0},TTM_no_top_Zprime_M{0},Signal_Topfirst_Zprime_M{0},TTM_Tprime_M{0},TTM_no_top_Tprime_M{0};
   
   
   //Set branches
@@ -39,6 +39,9 @@ int main()
   
   chain->SetBranchStatus("TTM_Mistagrate",1);  
   chain->SetBranchAddress("TTM_Mistagrate",&TTM_Mistagrate);
+  
+  chain->SetBranchStatus("TTM_Tprime_M",1);  
+  chain->SetBranchAddress("TTM_Tprime_M",&TTM_Tprime_M);
   
   chain->SetBranchStatus("TTM_Zprime_M",1);  
   chain->SetBranchAddress("TTM_Zprime_M",&TTM_Zprime_M);
@@ -52,11 +55,14 @@ int main()
   chain->SetBranchStatus("TTM_highest_Ws_M",1);  
   chain->SetBranchAddress("TTM_highest_Ws_M",&TTM_highest_Ws_M);
   
-  chain->SetBranchStatus("TTM_no_top_separated_highest_bottoms_M",1);  
+  chain->SetBranchStatus("TTM_no_top_separated_highest_bottoms_M",1); 
   chain->SetBranchAddress("TTM_no_top_separated_highest_bottoms_M",&TTM_no_top_separated_highest_bottoms_M);
   
   chain->SetBranchStatus("TTM_no_top_Zprime_M",1);  
   chain->SetBranchAddress("TTM_no_top_Zprime_M",&TTM_no_top_Zprime_M);
+  
+  chain->SetBranchStatus("TTM_no_top_Tprime_M",1);  
+  chain->SetBranchAddress("TTM_no_top_Tprime_M",&TTM_no_top_Tprime_M);
   
   chain->SetBranchStatus("Signal_Topfirst_Zprime_M",1);
   chain->SetBranchAddress("Signal_Topfirst_Zprime_M",&Signal_Topfirst_Zprime_M); 
@@ -66,6 +72,8 @@ int main()
   TH1F* hZmassTopfirst = new TH1F("hZmassTopfirst","M(Z') Background Topfirst",50,0,5000);
   TH1F* hZmassnotop = new TH1F("hZmassnotop","M(Z') Background no top",50,0,5000);
   TH1F* hmisstag = new TH1F("hmisstag","misstagrate",100,0,1);
+  TH1F* hTmass = new TH1F("hTmass","m_{T'}",50,0,5000);
+  TH1F* hTmassnotop = new TH1F("hTmassnotop","m_{T} no top",50,0,5000);
   //TH1F* hbotmass = new TH1F("hbotmass","Massdistriubtion of b-Quarks with the highest p_{T}",15,0,150);
 	//TH1F* hAK8mass = new TH1F("hAK8mass","Massdistriubtion of AK8 Jets with the highest p_{T}",20,0,200);
 	//TH1F* hWmass = new TH1F("hWmass","Massdistriubtion of W-Bosons with the highest p_{T}",15,0,150);
@@ -76,6 +84,8 @@ int main()
   hZmass->Sumw2();
   hZmassTopfirst->Sumw2();
   hZmassnotop->Sumw2();
+  hTmass->Sumw2();
+  hTmassnotop->Sumw2();
   
  
  	// sum over entries and fill histogramms
@@ -88,6 +98,8 @@ int main()
 		if(TTM_no_top_Zprime_M>0) hZmassnotop->Fill(TTM_no_top_Zprime_M,Weight_XS*TTM_Mistagrate);
 		if(Signal_Topfirst_Zprime_M>0) hZmassTopfirst->Fill(Signal_Topfirst_Zprime_M,Weight_XS);
 		if(TTM_Mistagrate>0)  hmisstag->Fill(TTM_Mistagrate);
+		if(TTM_Tprime_M>0) hTmass->Fill(TTM_Tprime_M,Weight_XS);
+		if(TTM_no_top_Tprime_M>0) hTmassnotop->Fill(TTM_no_top_Tprime_M,Weight_XS);
 		//if(TTM_separated_highest_bottoms_M>0) hbotmass->Fill(iEntry,Weight_XS);
 		//if(TTM_AK8_top_candidates_highest_M>0) hAK8mass->Fill(iEntry,Weight_XS);
 		//if(TTM_highest_Ws_M>0) hWmass->Fill(iEntry,Weight_XS);
@@ -102,10 +114,12 @@ int main()
 
 	//Write and save
   file->cd();
-  hZmass->Write("TTM_Zprime_M");
-  hZmassTopfirst->Write("Signal_Topfirst_Zprime_M");
-  hZmassnotop->Write("TTM_no_top_Zprime_M");
-  hmisstag->Write("misstag");
+  hZmass->Write("QCD_TTM_Zprime_M");
+  hZmassTopfirst->Write("QCD_Signal_Topfirst_Zprime_M");
+  hZmassnotop->Write("QCD_TTM_no_top_Zprime_M");
+  hTmass->Write("QCD_TTM_Tprime_M");
+  hTmassnotop->Write("QCD_TTM_no_top_Tprime_M");
+  hmisstag->Write("QCD_misstag");
   file->Close();
   
   

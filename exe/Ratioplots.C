@@ -27,7 +27,7 @@ void Ratioplots()
 	//h1->SetTitle("A simple Ratio");
 
 	gRStyle->BuildLegend(h1,"QCD Prediction ","l","RightUp",2);
-	gRStyle->BuildLegend(h2,"QCD Mistagged ");
+	gRStyle->BuildLegend(h2,"QCD Mistag","l");
 
 	
 }

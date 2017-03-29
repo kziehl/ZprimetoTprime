@@ -52,10 +52,13 @@ Double_t RUtil::GetMaxValOfVar (TChain* chain, const char* variable, const char*
     }
     return MaxVal;
 }
-//TODO: How to change labels?
+//TODO: How to change labels? Maybe shift some of the style settings in the exe file
 void RUtil::PrintRatioPlot(TH1F* histo1,TH1F* histo2)
 {
+	//set global style
+	//gStyle->SetErrorX(0);
 	gStyle->SetEndErrorSize(2);
+	// canvas
 	TCanvas *c1 = new TCanvas();
 	c1->SetTicks(0,0);
 	TRatioPlot* Ratio = new TRatioPlot(histo1,histo2,"divsym");
@@ -64,20 +67,21 @@ void RUtil::PrintRatioPlot(TH1F* histo1,TH1F* histo2)
 	histo1->SetStats(false);
 	histo1->SetLineWidth(2);
 	histo1->SetLineColor(4); // blue
-	histo1->GetXaxis()->SetTitle("m(Z') in GeV");
+	histo1->GetXaxis()->SetTitle("m_{Z'} in GeV");
 	histo1->GetYaxis()->SetTitle("Events");
 	histo2->SetLineWidth(2);
 	histo2->SetLineColor(2); // red
+	//histo2->SetMarkerStyle(8);
 	//Ratio Style
 	Ratio->SetSeparationMargin(0);
 	Ratio->SetH2DrawOpt("histe1");
 	Ratio->SetH1DrawOpt("histe1");
-	Ratio->Draw();
+	Ratio->Draw("fhideup");
 	// style of graph
 	Ratio->GetLowerRefGraph()->SetMinimum(0.5);
 	Ratio->GetLowerRefGraph()->SetMaximum(1.5);
 	Ratio->GetLowerRefGraph()->SetLineColor(1);
-	Ratio->GetLowYaxis()->SetNdivisions(5,true); 
+	Ratio->GetLowYaxis()->SetNdivisions(305); 
 	//Ratio->GetLowerRefYaxis()->ChangeLabel(1,-1,0);
 	//Number of grid lines
 	std::vector<double> lines = {1};
