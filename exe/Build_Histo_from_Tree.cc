@@ -19,12 +19,14 @@ using namespace std;
 int main()
 {
 	// create root file in which the histograms will be saved
-	TFile *file = new TFile("/nfs/dust/cms/user/kziehl/plots/bkg_estimation/rootfile/analysis_QCD.root","RECREATE");
+	TFile *file = new TFile("/nfs/dust/cms/user/kziehl/plots/bkg_estimation/rootfile/analysis_Zprime_2500_1500.root","RECREATE");
 	
 	
 	//Load data files
-	TChain	*chain = gRLoader->GetQCDFiles();
+	//TChain	*chain = gRLoader->GetZprimeFiles();
 	std::cout << "Number of Entries in chain: " << chain->GetEntries() << std::endl;
+	TFile f("/nfs/dust/cms/user/kziehl/processed_MC/ntuples_3_29/Signal_Zprime/Zprime_2500_1500_nominal_Tree.root")
+	TTree *chain =(TTree*)f.Get("MVATree");
 
   
   //variables
@@ -94,11 +96,11 @@ int main()
   for(Long64_t iEntry=0;iEntry<Nentries;iEntry++)
   {
 		chain->GetEntry(iEntry);
-		if(TTM_Zprime_M>0) hZmass->Fill(TTM_Zprime_M,Weight_XS*TTM_Mistagrate);
-		if(TTM_no_top_Zprime_M>0) hZmassnotop->Fill(TTM_no_top_Zprime_M,Weight_XS*TTM_Mistagrate);
+		//if(TTM_Zprime_M>0) hZmass->Fill(TTM_Zprime_M,Weight_XS*TTM_Mistagrate);
+		//if(TTM_no_top_Zprime_M>0) hZmassnotop->Fill(TTM_no_top_Zprime_M,Weight_XS*TTM_Mistagrate);
 		if(Signal_Topfirst_Zprime_M>0) hZmassTopfirst->Fill(Signal_Topfirst_Zprime_M,Weight_XS);
-		if(TTM_Mistagrate>0)  hmisstag->Fill(TTM_Mistagrate);
-		if(TTM_Tprime_M>0) hTmass->Fill(TTM_Tprime_M,Weight_XS);
+		//if(TTM_Mistagrate>0)  hmisstag->Fill(TTM_Mistagrate);
+		//if(TTM_Tprime_M>0) hTmass->Fill(TTM_Tprime_M,Weight_XS);
 		if(TTM_no_top_Tprime_M>0) hTmassnotop->Fill(TTM_no_top_Tprime_M,Weight_XS);
 		//if(TTM_separated_highest_bottoms_M>0) hbotmass->Fill(iEntry,Weight_XS);
 		//if(TTM_AK8_top_candidates_highest_M>0) hAK8mass->Fill(iEntry,Weight_XS);
