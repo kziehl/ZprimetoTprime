@@ -25,7 +25,7 @@ int main()
 	
 	//set branches
 	vector <Float_t> pt(1000),eta(1000),pt_AK8(1000),eta_AK8(1000);
-	Int_t N_tagged_top(0),N_AK8_top_tag_candidates(0),N_Ws(0),N_Bottoms(0);
+	Int_t N_misstagged_top(0),N_AK8_top_misstag_candidates(0),N_Ws(0),N_Bottoms(0);
 	Float_t Weight_XS(0),Signal_Topfirst_Tprime_M(0);
 	
 	
