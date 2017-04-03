@@ -76,11 +76,11 @@ int main()
   	chain->GetEntry(i);
   	if (N_Ws>0 && N_Bottoms>0 && Signal_Topfirst_Tprime_M>500)
   	{
-			for (int j=0;j<N_tagged_top;j++)
+			for (int j=0;j<N_misstagged_top;j++)
 			{
 				hpteta->Fill(eta[j],pt[j],Weight_XS);
 			}
-			for (int j=0;j<N_AK8_top_tag_candidates;j++)
+			for (int j=0;j<N_AK8_top_misstag_candidates;j++)
 			{
 				hAK8->Fill(eta_AK8[j],pt_AK8[j],Weight_XS);
 			}

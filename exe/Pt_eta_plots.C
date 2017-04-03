@@ -21,10 +21,10 @@ void Pt_eta_plots()
 	
 	 //set style
   TCanvas * cs = new TCanvas("cs","cs",800,800);
-  divide->SetTitleOffset(1.1,"x");
+  divide->SetTitleOffset(0.9,"x");
 	divide->SetTitleSize(0.05,"x");
 	divide->SetLabelSize(0.05,"x");
-	divide->SetTitleOffset(1.3,"y");
+	divide->SetTitleOffset(1.,"y");
 	divide->SetTitleSize(0.05,"y");
 	divide->SetLabelSize(0.05,"y");
   divide->GetXaxis()->SetTitle("#eta");
