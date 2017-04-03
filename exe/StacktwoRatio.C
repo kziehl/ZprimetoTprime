@@ -9,7 +9,7 @@
 #include "../include/RStyle.h"
 
 
-void StackRatio()
+void StacktwoRatio()
 {
 	//no stat box
 	gStyle->SetOptStat(0);
@@ -30,15 +30,20 @@ void StackRatio()
 		// canvas
 	TCanvas *c1 = new TCanvas("c1","c1",800,800);
 	c1->SetTicks(0,0);
+	//upper plot in pad 1
+	TPad *pad1 = new TPad("pad1","pad1",0.,0.4,1.,1.0);
+	pad1->SetBottomMargin(0);
+	pad1->Draw();
+	pad1->cd();
 	//ratio plot
-	TRatioPlot* Ratio = new TRatioPlot(hsum_data,hsum_pred,"diffsig");
+	TRatioPlot* Ratio = new TRatioPlot(hsum_data,hsum_pred,"divsym");
 	// style for sum_data
 	hsum_data->SetTitle("");
 	hsum_data->SetMarkerStyle(8);
 	hsum_data->SetMarkerSize(1.1);
 	hsum_data->SetLineColor(1);
 	hsum_data->Scale(37.82);
-	hsum_data->GetXaxis()->SetTitle("m_{Z'} in GeV");
+	//hsum_data->GetXaxis()->SetTitle("m_{Z'} in GeV");
 	hsum_data->GetYaxis()->SetTitle("Events");
 	//style for sum_pred
 	hsum_pred->SetLineWidth(2);
@@ -49,16 +54,16 @@ void StackRatio()
 	Ratio->SetSeparationMargin(0);
 	Ratio->SetH1DrawOpt("pe");
 	Ratio->SetH2DrawOpt("histe");
-	Ratio->SetGraphDrawOpt("B");
-	Ratio->Draw("fhideup");
+	Ratio->Draw("fhideup same");
 	// style of graph
 	Ratio->GetLowerRefGraph()->SetMinimum(0.5);
 	Ratio->GetLowerRefGraph()->SetMaximum(1.5);
 	Ratio->GetLowerRefGraph()->SetLineColor(1);
+	Ratio->GetLowerRefXaxis()->SetLabelSize(0);
 	Ratio->GetLowYaxis()->SetNdivisions(305); 
 	//Ratio->GetLowerRefYaxis()->ChangeLabel(1,-1,0);
 	//Number of grid lines
-	std::vector<double> lines = {0};
+	std::vector<double> lines = {1};
 	Ratio->SetGridlines(lines);
 	// Style
 	Ratio->GetUpperPad()->cd();
@@ -80,7 +85,31 @@ void StackRatio()
 	gRStyle->BuildLegend(httbar,"Top quark","f");
 	gRStyle->BuildLegend(hsum_bkg,"QCD Prediction","f");
 	gRStyle->BuildLegend(hsum_data,"Data","ep");
-
-
+	//lower plot will be in pad
+	c1->cd();
+	TPad *pad2 = new TPad("pad2","pad2",0.,0.,1.,0.4);
+	pad2->SetTopMargin(0);
+	pad2->SetBottomMargin(0.1);
+	pad2->Draw();
+	pad2->cd();
+	//define the ratio plot
+	TH1F * hsub = new TH1F("hsub","hsub",hsum_data->GetSize()-2,hsum_data->GetXaxis()->GetXmin(),hsum_data->GetXaxis()->GetXmax());
+	hsub->Add(hsum_data);
+	hsub->Add(hsum_pred,-1);
+	hsub->SetLineColor(1);
+	hsub->SetMinimum(-5);
+	hsub->SetMaximum(15);
+	//hsub->Sumw2();
+	hsub->SetTitle("");
+	hsub->SetLabelSize(0.05);
+	hsub->SetStats(false);
+	hsub->SetNdivisions(305,"y"); 
+	hsub->SetMarkerStyle(2);
+	hsub->GetXaxis()->SetTitle("m_{Z'} in GeV");
+	hsub->Draw("e1p");
+	TLine *l = new TLine(0,0,5000,0);
+	l->SetLineColor(1);
+	l->SetLineStyle(2);
+	l->Draw("same");
 	
 }
