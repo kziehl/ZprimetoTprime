@@ -116,7 +116,7 @@ int main()
  	// sum over entries and fill histogramms
   Long64_t Nentries = chain->GetEntries();
   
-  for(Long64_t iEntry=0;iEntry<1000000;iEntry++)
+  for(Long64_t iEntry=0;iEntry<Nentries;iEntry++)
   {
 		chain->GetEntry(iEntry);
 		/*

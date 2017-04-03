@@ -17,7 +17,7 @@ void Pt_eta_plots()
 	//load file
 	TFile *file = new TFile("/home/kevin/Desktop/file/QCD_false_negativ_bottom_W_tprime.root");
 	
-	TH2F* divide = dynamic_cast<TH2F*>(file->Get("BKG_QCD_false_negativ"));
+	TH2F* hdiv = dynamic_cast<TH2F*>(file->Get("BKG_QCD_false_negativ"));
 	
 	 //set style
   TCanvas * cs = new TCanvas("cs","cs",800,800);
