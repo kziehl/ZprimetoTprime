@@ -23,22 +23,23 @@ int main()
 	
 	
 	//Load data files
-	TChain	*chain = gRLoader->GetTTbarFiles();
+	TChain	*chain = gRLoader->GetQCDFiles();
 	std::cout << "Number of Entries in chain: " << chain->GetEntries() << std::endl;
 	//TFile f("/nfs/dust/cms/user/kziehl/processed_MC/ntuples_3_29/Signal_Zprime/Zprime_1500_1200_nominal_Tree.root");
 	//TTree *chain =(TTree*)f.Get("MVATree");
 
   
   //variables
-  Float_t Weight_XS{0},TTM_Zprime_M{0},TTM_Mistagrate{0},TTM_separated_highest_bottoms_M{0},TTM_AK8_top_candidates_highest_pt{0},TTM_highest_Ws_M{0},TTM_no_top_separated_highest_bottoms_M{0},TTM_no_top_Zprime_M{0},Signal_Topfirst_Zprime_M{0},TTM_Tprime_M{0},TTM_no_top_Tprime_M{0},Signal_Topfirst_Tprime_M{0},N_Signal_Topfirst_Tops{0};
+  Float_t Weight_XS{0},TTM_Zprime_M{0},TTM_Mistagrate{0},TTM_separated_highest_bottoms_M{0},TTM_AK8_top_candidates_highest_pt{0},TTM_highest_Ws_M{0},TTM_no_top_separated_highest_bottoms_M{0},TTM_no_top_Zprime_M{0},Signal_Topfirst_Zprime_M{0},TTM_Tprime_M{0},TTM_no_top_Tprime_M{0},Signal_Topfirst_Tprime_M{0};
+  Int_t N_Signal_Topfirst_Tops{0};
   vector <Float_t> Signal_Topfirst_Tops_Pt(1000);
   
   //Set branches
   chain->SetBranchStatus("*",0);
-  /*
+  
   chain->SetBranchStatus("Weight_XS",1);  
   chain->SetBranchAddress("Weight_XS",&Weight_XS);
-  */
+  
   chain->SetBranchStatus("TTM_Mistagrate",1);  
   chain->SetBranchAddress("TTM_Mistagrate",&TTM_Mistagrate);
   
@@ -115,7 +116,7 @@ int main()
  	// sum over entries and fill histogramms
   Long64_t Nentries = chain->GetEntries();
   
-  for(Long64_t iEntry=0;iEntry<Nentries;iEntry++)
+  for(Long64_t iEntry=0;iEntry<1000000;iEntry++)
   {
 		chain->GetEntry(iEntry);
 		/*
@@ -130,10 +131,10 @@ int main()
 		//if(TTM_highest_Ws_M>0) hWmass->Fill(iEntry,Weight_XS);
 		//if(TTM_separated_highest_bottoms_no_top_M>0) hbotmassnotop->Fill(TTM_separated_highest_bottoms_no_top_M,Weight_XS);
     */
-    if(TTM_AK8_top_candidates_highest_pt>0) hAK8pt->Fill(TTM_AK8_top_candidates_highest_pt,Weight_XS);
+    if(TTM_AK8_top_candidates_highest_pt>0 && TTM_Zprime_M>0 ) hAK8pt->Fill(TTM_AK8_top_candidates_highest_pt,Weight_XS*TTM_Mistagrate);
     // this loop is probably not necessary
     for (int j=0;j<N_Signal_Topfirst_Tops;j++) {
-    	if (j==0 && TTM_Zprime_M>0 && Signal_Topfirst_Tops_Pt.at(0)>0) htoppt->Fill(Signal_Topfirst_Tops_Pt.at(j),Weight_XS*TTM_Mistagrate);
+    	if (j==0 && Signal_Topfirst_Tops_Pt.at(0)>0) htoppt->Fill(Signal_Topfirst_Tops_Pt.at(j),Weight_XS);
     }
     	
      if(iEntry%100000==0)
