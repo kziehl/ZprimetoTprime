@@ -108,7 +108,7 @@ TH1F* RUtil::DrawStackPlot(TH1F* histo1, TH1F* histo2,TH1F* histo3)
 	tHisto->SetFillColor(2);
 	tHisto->SetLineColor(1);
 	tHisto->SetLineWidth(2);
-	tHisto->Scale(37.82); //integrated luminosity
+	tHisto->Scale(37.82); //integrated luminosity 2016
 	tHisto->Draw("histe");
 	gRStyle->BuildLegend(tHisto,"m_{Z'}=2.5 TeV, m_{T}=1.5TeV","fe","RightUp",4);
 	//style histo 2
