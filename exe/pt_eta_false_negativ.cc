@@ -18,7 +18,7 @@ using namespace std;
 int main()
 {
 	// create root file in which the rootfile will be saved
-	TFile *file = new TFile("/nfs/dust/cms/user/kziehl/plots/pt_eta/rootfile/QCD_false_negativ_bottom_W_tprime.root","RECREATE");
+	TFile *file = new TFile("/nfs/dust/cms/user/kziehl/plots/pt_eta/rootfile/QCD_false_negativ_2.root","RECREATE");
 	
 	//Load data files
 	TChain	*chain = gRLoader->GetQCDFiles();
@@ -75,8 +75,8 @@ int main()
   for(Long64_t i=0; i<nentries; i++)
   {
   	chain->GetEntry(i);
-  	if (N_Ws>0 && N_Bottoms>0 && Signal_Topfirst_Tprime_M>500)
-  	{
+  	//if (N_Ws>0 && N_Bottoms>0 && Signal_Topfirst_Tprime_M>500)
+  	//{
 			for (int j=0;j<N_misstagged_top;j++)
 			{
 				hpteta->Fill(eta[j],pt[j],Weight_XS);
@@ -85,7 +85,7 @@ int main()
 			{
 				hAK8->Fill(eta_AK8[j],pt_AK8[j],Weight_XS);
 			}
-		}
+		//}
 		
   	if (i%100000==0)
   	{

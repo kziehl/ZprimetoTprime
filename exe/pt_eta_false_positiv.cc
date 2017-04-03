@@ -56,18 +56,25 @@ int main()
 	
 	// Set Branches for interesting variables
 	chain->SetBranchStatus("*",0);
+	
 	chain->SetBranchStatus("tagged_top_anti_pt",1);
   chain->SetBranchAddress("tagged_top_anti_pt",&(pt.front()));
+  
   chain->SetBranchStatus("tagged_top_anti_eta",1);
   chain->SetBranchAddress("tagged_top_anti_eta",&(eta.front()));
+  
   chain->SetBranchStatus("AK8_top_misstagged_candidates_pt",1);
   chain->SetBranchAddress("AK8_top_misstagged_candidates_pt",&(pt_AK8.front()));
+  
   chain->SetBranchStatus("AK8_top_misstagged_candidates_eta",1); 
   chain->SetBranchAddress("AK8_top_misstagged_candidates_eta",&(eta_AK8.front()));
+  
   chain->SetBranchStatus("N_tagged_top_anti",1);
   chain->SetBranchAddress("N_tagged_top_anti",&N_tagged_top);
+  
   chain->SetBranchStatus("N_AK8_top_misstag_candidates",1);
   chain->SetBranchAddress("N_AK8_top_misstag_candidates",&N_AK8_top_tag_candidates);
+  
   chain->SetBranchStatus("Weight_XS",1);
   chain->SetBranchAddress("Weight_XS",&Weight_XS);
   
