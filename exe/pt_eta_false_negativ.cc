@@ -6,6 +6,7 @@
 #include "TTree.h"
 #include "TH1F.h"
 #include "TChain.h"
+#include "TH2F.h"
 
 #include "../include/RUtil.h"
 #include "../include/RLoader.h"
@@ -45,10 +46,10 @@ int main()
   chain->SetBranchAddress("AK8_top_misstagged_candidates_eta",&(eta_AK8.front()));
   
   chain->SetBranchStatus("N_misstagged_top",1);
-  chain->SetBranchAddress("N_misstagged_top",&N_tagged_top);
+  chain->SetBranchAddress("N_misstagged_top",&N_misstagged_top);
   
   chain->SetBranchStatus("N_AK8_top_misstag_candidates",1);
-  chain->SetBranchAddress("N_AK8_top_misstag_candidates",&N_AK8_top_tag_candidates);
+  chain->SetBranchAddress("N_AK8_top_misstag_candidates",&N_AK8_top_misstag_candidates);
   
   chain->SetBranchStatus("N_Ws",1);
   chain->SetBranchAddress("N_Ws",&N_Ws);
