@@ -21,6 +21,8 @@ class RUtil
 		Double_t GetMaxValOfVar (TChain* chain, const char* variable, const char* length);
 		/* create a ratio plot with h1/h2. The ratio is evaluated with the option "divsym". histo1 will be drawn in blue and histo2 in red. */
 	 	static void PrintRatioPlot (TH1F* histo1,TH1F* histo2);
+	 	static TH1F* DrawStackPlot(TH1F* histo1, TH1F* histo2,TH1F* histo3=0);
+	 	
 			
 					
 };

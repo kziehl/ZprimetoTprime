@@ -89,3 +89,48 @@ void RUtil::PrintRatioPlot(TH1F* histo1,TH1F* histo2)
 	gRStyle->PrintCMSPublicationStatus("Private Work");
 }
 
+
+TH1F* RUtil::DrawStackPlot(TH1F* histo1, TH1F* histo2,TH1F* histo3)
+{
+	if (histo1->GetSize() != histo2->GetSize()) {
+		std::cout << "Failed to add histograms with different number of bins" << std::endl;
+	}
+	// adding histograms + style
+	TH1F* tHisto = new TH1F("tHisto","tHisto",histo1->GetSize()-2,histo1->GetXaxis()->GetXmin(),histo1->GetXaxis()->GetXmax());
+	tHisto->Add(histo1,histo2);
+	tHisto->Add(histo3);
+	TCanvas *c1 = new TCanvas();
+	c1->SetTicks(0,0);
+	tHisto->GetXaxis()->SetTitle("m_{Z'} in GeV");
+	tHisto->GetYaxis()->SetTitle("Events");
+	tHisto->SetStats(false);
+	tHisto->SetTitle("");
+	tHisto->SetFillColor(2);
+	tHisto->SetLineColor(1);
+	tHisto->SetLineWidth(2);
+	tHisto->Scale(37.82); //integrated luminosity
+	tHisto->Draw("histe");
+	gRStyle->BuildLegend(tHisto,"m_{Z'}=2.5 TeV, m_{T}=1.5TeV","fe","RightUp",4);
+	//style histo 2
+	histo2->SetLineWidth(2);
+	histo2->SetFillColor(5);
+	histo2->SetLineColor(1);
+	histo2->Scale(37.82);
+	histo2->Draw("histe same");
+	gRStyle->BuildLegend(histo2,"QCD Prediction","f");
+	//style histo 1
+	histo1->SetLineWidth(2);
+	histo1->SetFillColor(4);
+	histo1->SetLineColor(1);
+	histo1->Scale(37.82);
+	histo1->Draw("histe same");
+	gRStyle->BuildLegend(histo1,"Top quark","f");
+	//style
+	gRStyle->PrintCrossSection();
+	gRStyle->PrintCMSPublicationStatus("Private Work");
+	
+	return tHisto;
+}
+
+
+
