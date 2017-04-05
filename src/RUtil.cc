@@ -63,10 +63,12 @@ void RUtil::PrintRatioPlot(TH1F* histo1,TH1F* histo2)
 	histo1->SetTitle("");
 	histo1->SetStats(false);
 	histo1->SetLineWidth(2);
+	histo1->Scale(37.82);
 	histo1->SetLineColor(4); // blue
-	histo1->GetXaxis()->SetTitle("p_{T} in GeV");//m_{Z'} in GeV
+	histo1->GetXaxis()->SetTitle("m_{T} in GeV");//m_{Z'} in GeV
 	histo1->GetYaxis()->SetTitle("Events");
 	histo2->SetLineWidth(2);
+	histo2->Scale(37.82);
 	histo2->SetLineColor(2); // red
 	//histo2->SetMarkerStyle(8);
 	//Ratio Style
@@ -112,6 +114,7 @@ TH1F* RUtil::DrawStackPlot(TH1F* histo1, TH1F* histo2,TH1F* histo3)
 	tHisto->Draw("histe");
 	gRStyle->BuildLegend(tHisto,"m_{Z'}=2.5 TeV, m_{T}=1.5TeV","fe","RightUp",4);
 	//style histo 2
+	histo2->Add(histo1);
 	histo2->SetLineWidth(2);
 	histo2->SetFillColor(5);
 	histo2->SetLineColor(1);
