@@ -108,7 +108,7 @@ int main()
   
   
   // weighting factor for signal
-  Double_t Weight = 1000./232087.;
+  Double_t Weight = 1000./227926.;
   std::cout << Weight << std::endl;
  
  	// sum over entries and fill histogramms
