@@ -13,6 +13,7 @@
 #include "TLatex.h"
 
 #include "../include/RStyle.h"
+#include "../include/RUtil.h"
 //TODO:  how to set title of a plot? A: Use TPad //adapt to new canvas size
 
 RStyle* gRStyle;
@@ -87,19 +88,21 @@ void RStyle::PrintCanvasTH1F(const std::vector<TH1F*>& histo,const char* title,c
 {
 	if (histo.size()==0) {
 		std::cout << "Fatal error occured. No valid number of histograms." << std::endl;
+		return;
 	}
-	
-	Double_t tMax = gRUtil->Get(GetYMaxOfList);
+	Double_t tMax = gRUtil->GetYMaxOfList(histo);
 	fCanvas = new TCanvas("Canvas","",0,0,800,800);
 	//fCanvas->SetTicks(1,1);
 	histo.at(0)->SetTitle(title);
   histo.at(0)->SetTitleOffset(1.1,"x");
-  histo.at(0)->SetTitleSize(0.04,"x");
+  histo.at(0)->SetTitleSize(0.05,"x");
   histo.at(0)->SetLabelSize(0.04,"x");
+  histo.at(0)->SetTitleOffset(0.8,"x");
   histo.at(0)->SetTitleOffset(1.1,"y");
-  histo.at(0)->SetTitleSize(0.04,"y");
+  histo.at(0)->SetTitleSize(0.05,"y");
   histo.at(0)->SetLabelOffset(0.01,"y");
   histo.at(0)->SetLabelSize(0.04,"y");
+  histo.at(0)->SetTitleOffset(0.7,"y");
   histo.at(0)->GetXaxis()->SetTitle(xaxistitle);
   histo.at(0)->GetYaxis()->SetTitle(yaxistitle);
   histo.at(0)->SetStats(false);
@@ -110,11 +113,11 @@ void RStyle::PrintCanvasTH1F(const std::vector<TH1F*>& histo,const char* title,c
   histo.at(0)->GetYaxis()->SetRangeUser(0,1.1*(tMax+TMath::Sqrt(tMax)));
   histo.at(0)->Draw(option);
   //draw all histos in the same pad
-  for (Int_t ihisto=0;ihisto<histo.size();ihisto++) {
-  	ihisto->SetLineStyle(1);
-  	ihisto->SetLineWidth(2);
-  	ihisto->SetLineColor(1+ihisto);
-  	ihisto->Draw("same hist");
+  for (Int_t ihisto=1;ihisto<histo.size();ihisto++) {
+  	histo.at(ihisto)->SetLineStyle(1);
+  	histo.at(ihisto)->SetLineWidth(2);
+  	histo.at(ihisto)->SetLineColor(1+ihisto);
+  	histo.at(ihisto)->Draw("same hist");
   }
   gRStyle->PrintCrossSection();
   gRStyle->PrintCMSPublicationStatus("Private Work");

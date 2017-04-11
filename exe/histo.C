@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 
 #include "TRatioPlot.h"
 #include "TFile.h"
@@ -14,20 +15,16 @@ void histo()
 	//gRStyle->SetGlobalStyle();
 	TFile *file = new TFile("/home/kevin/Desktop/file/number_of_entries.root");
 	
-	TH1F* h1 = dynamic_cast<TH1F*>(file->Get("Amount_of_tops"));
-	TH1F* h2 = dynamic_cast<TH1F*>(file->Get("Amount_of_ak8"));
+	vector<TH1F*> histo(2);
+	histo.at(0) = dynamic_cast<TH1F*>(file->Get("Amount_of_tops"));
+	histo.at(1) = dynamic_cast<TH1F*>(file->Get("Amount_of_ak8"));
 
 	
 	//h7->Scale(1/h7->Integral());
 	//h8->Scale(1/h8->Integral());
 
-	gRStyle->PrintCanvasTH1F(h1,"","Amount of entries","Events","hist");
-	h2->SetLineColor(2);
-  h2->SetLineWidth(2);
-  h2->Draw("same hist");
-  gRStyle->BuildLegend(h1,"Top Quark","l","RightUp",2);
-	gRStyle->BuildLegend(h2,"AK8 Jet","l");
-
-
+	gRStyle->PrintCanvasTH1F(histo,"","Amount of entries","Events","hist");
+	gRStyle->BuildLegend(histo.at(0),"Top quark","l","RightUp",2);
+	gRStyle->BuildLegend(histo.at(1),"AK8 Jet","l");
 	
 }
