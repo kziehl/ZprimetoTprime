@@ -94,7 +94,7 @@ void RStyle::PrintCanvasTH1F(const std::vector<TH1F*>& histo,const char* title,c
 	fCanvas = new TCanvas("Canvas","",0,0,800,800);
 	//fCanvas->SetTicks(1,1);
 	histo.at(0)->SetTitle(title);
-  histo.at(0)->SetTitleOffset(1.1,"x");
+  histo.at(0)->SetTitleOffset(0.8,"x");
   histo.at(0)->SetTitleSize(0.05,"x");
   histo.at(0)->SetLabelSize(0.04,"x");
   histo.at(0)->SetTitleOffset(0.8,"x");
