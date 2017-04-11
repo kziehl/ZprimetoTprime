@@ -30,7 +30,7 @@ class RStyle
 		//draws a legend in the desired corner.The options are RightUp,RightDown,LeftUp,LeftDown. By the first call of the function the number of rows and the longest entry must be known to initialize the legend. If now description is specified the title of the histogram is used by default.
 		static void BuildLegend (TH1F* histo,const char* descript="",const char* option="l",const char* corner="RightUp",Int_t nrows=1);
 		//still in progress
-		TCanvas* PrintCanvasTH1F (TH1F* histo,const char* title="",const char* xaxistitle="",const char* yaxistitle="",const char* option="");
+		static void PrintCanvasTH1F (TH1F* histo,const char* title="",const char* xaxistitle="",const char* yaxistitle="",const char* option="");
 		//sets default style for Canvas,Pad,Frame,Legend,Axis. Not recommended if using RUtil::PrintRatioPlot.
 		static void SetGlobalStyle (void);
 					

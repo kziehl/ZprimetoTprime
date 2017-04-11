@@ -83,10 +83,11 @@ void RStyle::BuildLegend(TH1F* histo,const char* descript,const char* option,con
 }
 
 // match this function with SetGlobalStyle
-TCanvas* RStyle::PrintCanvasTH1F(TH1F* histo,const char* title,const char* xaxistitle,const char* yaxistitle,const char* option)
+void RStyle::PrintCanvasTH1F(TH1F* histo,const char* title,const char* xaxistitle,const char* yaxistitle,const char* option)
 {
-	fCanvas = new TCanvas("Canvas",title,0,0,800,800);
+	fCanvas = new TCanvas("Canvas","",0,0,800,800);
 	//fCanvas->SetTicks(1,1);
+	histo->SetTitle(title);
   histo->SetTitleOffset(1.1,"x");
   histo->SetTitleSize(0.04,"x");
   histo->SetLabelSize(0.04,"x");
@@ -96,14 +97,15 @@ TCanvas* RStyle::PrintCanvasTH1F(TH1F* histo,const char* title,const char* xaxis
   histo->SetLabelSize(0.04,"y");
   histo->GetXaxis()->SetTitle(xaxistitle);
   histo->GetYaxis()->SetTitle(yaxistitle);
-  histo->SetStats(kFALSE);
+  histo->SetStats(false);
   histo->GetXaxis()->SetTicks("+");
   histo->GetYaxis()->SetTicks("-");
   histo->SetLineColor(1);
   histo->SetLineWidth(2);
   histo->GetYaxis()->SetRangeUser(0,1.1*(histo->GetMaximum()+TMath::Sqrt(histo->GetMaximum())));
   histo->Draw(option);
-  return fCanvas;
+  gRStyle->PrintCrossSection();
+  gRStyle->PrintCMSPublicationStatus("Private Work");
 }
 
 //TODO:still causes some unexpected behavior
