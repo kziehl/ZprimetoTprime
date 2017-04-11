@@ -20,8 +20,8 @@ void histo()
 	histo.at(1) = dynamic_cast<TH1F*>(file->Get("Amount_of_ak8"));
 
 	
-	//h7->Scale(1/h7->Integral());
-	//h8->Scale(1/h8->Integral());
+	histo.at(0)->Scale(1/histo.at(0)->Integral());
+	histo.at(1)->Scale(1/histo.at(1)->Integral());
 
 	gRStyle->PrintCanvasTH1F(histo,"","Amount of entries","Events","hist");
 	gRStyle->BuildLegend(histo.at(0),"Top quark","l","RightUp",2);

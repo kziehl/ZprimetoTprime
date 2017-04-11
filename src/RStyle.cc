@@ -74,7 +74,7 @@ void RStyle::BuildLegend(TH1F* histo,const char* descript,const char* option,con
   	fLegend->SetLineStyle(1);
   	fLegend->SetLineWidth(1);
   	fLegend->SetLineColor(1);
-  	fLegend->SetMargin(0.2);  //Distance between Left end of the box and entrytext
+  	fLegend->SetMargin(0.25);  //Distance between Left end of the box and entrytext
   	fLegend->SetFillStyle(0); //hollow
   	fLegend->SetFillColor(0);
   	fLegend->SetTextSize(0.04);
@@ -96,13 +96,12 @@ void RStyle::PrintCanvasTH1F(const std::vector<TH1F*>& histo,const char* title,c
 	histo.at(0)->SetTitle(title);
   histo.at(0)->SetTitleOffset(0.8,"x");
   histo.at(0)->SetTitleSize(0.05,"x");
+  histo.at(0)->SetLabelOffset(0.01,"x");
   histo.at(0)->SetLabelSize(0.04,"x");
-  histo.at(0)->SetTitleOffset(0.8,"x");
-  histo.at(0)->SetTitleOffset(1.1,"y");
   histo.at(0)->SetTitleSize(0.05,"y");
   histo.at(0)->SetLabelOffset(0.01,"y");
   histo.at(0)->SetLabelSize(0.04,"y");
-  histo.at(0)->SetTitleOffset(0.7,"y");
+  histo.at(0)->SetTitleOffset(1.,"y");
   histo.at(0)->GetXaxis()->SetTitle(xaxistitle);
   histo.at(0)->GetYaxis()->SetTitle(yaxistitle);
   histo.at(0)->SetStats(false);
