@@ -83,27 +83,39 @@ void RStyle::BuildLegend(TH1F* histo,const char* descript,const char* option,con
 }
 
 // match this function with SetGlobalStyle
-void RStyle::PrintCanvasTH1F(TH1F* histo,const char* title,const char* xaxistitle,const char* yaxistitle,const char* option)
+void RStyle::PrintCanvasTH1F(const std::vector<TH1F*>& histo,const char* title,const char* xaxistitle,const char* yaxistitle,const char* option)
 {
+	if (histo.size()==0) {
+		std::cout << "Fatal error occured. No valid number of histograms." << std::endl;
+	}
+	
+	Double_t tMax = gRUtil->Get(GetYMaxOfList);
 	fCanvas = new TCanvas("Canvas","",0,0,800,800);
 	//fCanvas->SetTicks(1,1);
-	histo->SetTitle(title);
-  histo->SetTitleOffset(1.1,"x");
-  histo->SetTitleSize(0.04,"x");
-  histo->SetLabelSize(0.04,"x");
-  histo->SetTitleOffset(1.1,"y");
-  histo->SetTitleSize(0.04,"y");
-  histo->SetLabelOffset(0.01,"y");
-  histo->SetLabelSize(0.04,"y");
-  histo->GetXaxis()->SetTitle(xaxistitle);
-  histo->GetYaxis()->SetTitle(yaxistitle);
-  histo->SetStats(false);
-  histo->GetXaxis()->SetTicks("+");
-  histo->GetYaxis()->SetTicks("-");
-  histo->SetLineColor(1);
-  histo->SetLineWidth(2);
-  histo->GetYaxis()->SetRangeUser(0,1.1*(histo->GetMaximum()+TMath::Sqrt(histo->GetMaximum())));
-  histo->Draw(option);
+	histo.at(0)->SetTitle(title);
+  histo.at(0)->SetTitleOffset(1.1,"x");
+  histo.at(0)->SetTitleSize(0.04,"x");
+  histo.at(0)->SetLabelSize(0.04,"x");
+  histo.at(0)->SetTitleOffset(1.1,"y");
+  histo.at(0)->SetTitleSize(0.04,"y");
+  histo.at(0)->SetLabelOffset(0.01,"y");
+  histo.at(0)->SetLabelSize(0.04,"y");
+  histo.at(0)->GetXaxis()->SetTitle(xaxistitle);
+  histo.at(0)->GetYaxis()->SetTitle(yaxistitle);
+  histo.at(0)->SetStats(false);
+  histo.at(0)->GetXaxis()->SetTicks("+");
+  histo.at(0)->GetYaxis()->SetTicks("-");
+  histo.at(0)->SetLineColor(1);
+  histo.at(0)->SetLineWidth(2);
+  histo.at(0)->GetYaxis()->SetRangeUser(0,1.1*(tMax+TMath::Sqrt(tMax)));
+  histo.at(0)->Draw(option);
+  //draw all histos in the same pad
+  for (Int_t ihisto=0;ihisto<histo.size();ihisto++) {
+  	ihisto->SetLineStyle(1);
+  	ihisto->SetLineWidth(2);
+  	ihisto->SetLineColor(1+ihisto);
+  	ihisto->Draw("same hist");
+  }
   gRStyle->PrintCrossSection();
   gRStyle->PrintCMSPublicationStatus("Private Work");
 }

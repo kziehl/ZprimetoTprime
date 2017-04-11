@@ -30,7 +30,7 @@ int main()
   
   //variables
   Float_t Weight_XS{0},TTM_Zprime_M{0},TTM_Mistagrate{0},TTM_separated_highest_bottoms_M{0},TTM_AK8_top_candidates_highest_pt{0},TTM_highest_Ws_M{0},TTM_no_top_separated_highest_bottoms_M{0},TTM_no_top_Zprime_M{0},Signal_Topfirst_Zprime_M{0},TTM_Tprime_M{0},TTM_no_top_Tprime_M{0},Signal_Topfirst_Tprime_M{0};
-  Int_t N_Signal_Topfirst_Tops{0},N_AK8_top_tag_candidates{0};
+  Int_t N_Signal_Topfirst_Tops{0},N_AK8_top_candidates{0};
   vector <Float_t> Signal_Topfirst_Tops_Pt(1000);
   
   //Set branches
@@ -48,8 +48,8 @@ int main()
   chain->SetBranchStatus("N_Signal_Topfirst_Tops",1);
   chain->SetBranchAddress("N_Signal_Topfirst_Tops",&N_Signal_Topfirst_Tops);
   
-	chain->SetBranchStatus("N_AK8_top_tag_candidates",1);
-	chain->SetBranchAddress("N_AK8_top_tag_candidates",&N_AK8_top_tag_candidates);
+	chain->SetBranchStatus("N_AK8_top_candidates",1);
+	chain->SetBranchAddress("N_AK8_top_candidates",&N_AK8_top_candidates);
   
   
   //creating histograms
@@ -68,7 +68,7 @@ int main()
 		
 		if(TTM_Zprime_M>0) {
 			hnumbertops->Fill(N_Signal_Topfirst_Tops);
-			hnumberak8->Fill(N_AK8_top_tag_candidates);
+			hnumberak8->Fill(N_AK8_top_candidates);
 		}
 		
     
