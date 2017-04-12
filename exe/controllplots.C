@@ -58,6 +58,9 @@ int main()
   chain->SetBranchStatus("AK8_top_candidates_pt",1);
   chain->SetBranchAddress("AK8_top_candidates_pt",&(AK8_top_candidates_pt.front()));
   
+  chain->SetBranchStatus("TTM_AK8_top_candidates_highest_pt",1);  
+  chain->SetBranchAddress("TTM_AK8_top_candidates_highest_pt",&TTM_AK8_top_candidates_highest_pt);
+  
   
   //creating histograms
 	TH1F* hAK8pt = new TH1F("hAK8pt","Pt of AK8 Jets with the highest p_{T}",100,0,5000);
