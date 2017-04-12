@@ -31,7 +31,7 @@ int main()
   //variables
   Float_t Weight_XS{0},TTM_Zprime_M{0},TTM_Mistagrate{0},TTM_AK8_top_candidates_highest_pt{0},Signal_Topfirst_Zprime_M{0};
   Int_t N_Signal_Topfirst_Tops{0},N_AK8_top_candidates{0};;
-  vector <Float_t> Signal_Topfirst_Tops_Pt(1000),AK8_top_tag_candidates_pt(1000);
+  vector <Float_t> Signal_Topfirst_Tops_Pt(1000),AK8_top_candidates_pt(1000);
   
   
   //Set branches
@@ -55,8 +55,8 @@ int main()
   chain->SetBranchStatus("Signal_Topfirst_Tops_Pt",1);
   chain->SetBranchAddress("Signal_Topfirst_Tops_Pt",&(Signal_Topfirst_Tops_Pt.front()));
   
-  chain->SetBranchStatus("AK8_top_tag_candidates_pt",1);
-  chain->SetBranchAddress("AK8_top_tag_candidates_pt",&(AK8_top_tag_candidates_pt.front()));
+  chain->SetBranchStatus("AK8_top_candidates_pt",1);
+  chain->SetBranchAddress("AK8_top_candidates_pt",&(AK8_top_candidates_pt.front()));
   
   
   //creating histograms
@@ -83,7 +83,7 @@ int main()
 		
 		if(TTM_Zprime_M>0) {
 			for (Int_t iEvent=0;iEvent<N_AK8_top_candidates;iEvent++) {
-				hAK8pt->Fill(AK8_top_tag_candidates_pt.at(iEvent),Weight_XS);
+				hAK8pt->Fill(AK8_top_candidates_pt.at(iEvent),Weight_XS);
 			}
 		}
 		
