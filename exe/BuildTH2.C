@@ -25,7 +25,7 @@ void BuildTH2()
 	TH2F* h10 = new TH2F("h10","",100,0,5000,100,0,5000);
 	TH2F* h11 = new TH2F("h11","",100,0,5000,100,0,5000);
 	
-	for(int i=1;i<5000;i++)
+	for(int i=1;i<100;i++)
 	{
 		h10->Fill(h1->GetBinContent(i),h2->GetBinContent(i));
 	}
