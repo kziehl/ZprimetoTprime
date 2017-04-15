@@ -217,11 +217,11 @@ int main()
 		}
 		//mass
 		for (int i=0;i<N_TTM_Zprime;i++) {
-			if(TTM_Zprime_M.at(i)>0) hZmass->Fill(TTM_Zprime_M.at(i),Weight_XS*TTM_Mistagrate_high);
+			if(TTM_Zprime_M.at(i)>0) hZmass->Fill(TTM_Zprime_M.at(i),Weight_XS*TTM_Mistagrate.at(i));
 		}
 		if(Signal_Topfirst_Zprime_M>0) hZmassTopfirst->Fill(Signal_Topfirst_Zprime_M,Weight_XS);
 		for (int i=0;i<N_TTM_Tprime;i++) {
-			if(TTM_Tprime_M.at(i)>0) hTmass->Fill(TTM_Tprime_M.at(i),Weight_XS*TTM_Mistagrate_high);
+			if(TTM_Tprime_M.at(i)>0) hTmass->Fill(TTM_Tprime_M.at(i),Weight_XS*TTM_Mistagrate.at(i));
 		}
 		if(Signal_Topfirst_Tprime_M>0) hTmassTopfirst->Fill(Signal_Topfirst_Tprime_M,Weight_XS);
 		for (int i=0;i<N_TTM_separated_highest_per_ak8_bottoms;i++) {
@@ -229,24 +229,24 @@ int main()
 		}
 		if(TTM_highest_Ws_M>0) hWmass->Fill(TTM_highest_Ws_M,Weight_XS);
 		for (int i=0;i<N_TTM_AK8_top_candidates_separated;i++) {
-			if(TTM_AK8_top_candidates_separated_M.at(i)>0) hak8sep->Fill(TTM_AK8_top_candidates_separated_M.at(i),Weight_XS*TTM_Mistagrate_high);
+			if(TTM_AK8_top_candidates_separated_M.at(i)>0) hak8sep->Fill(TTM_AK8_top_candidates_separated_M.at(i),Weight_XS*TTM_Mistagrate.at(i));
 		}
     if(TTM_AK8_top_candidates_highest_M>0) hak8high->Fill(TTM_AK8_top_candidates_highest_M,Weight_XS*TTM_Mistagrate_high);
     
     
     //pt
 		for (int i=0;i<N_TTM_Zprime;i++) {
-			if(TTM_Zprime_pt.at(i)>0) hZpt->Fill(TTM_Zprime_pt.at(i),Weight_XS*TTM_Mistagrate_high);
+			if(TTM_Zprime_pt.at(i)>0) hZpt->Fill(TTM_Zprime_pt.at(i),Weight_XS*TTM_Mistagrate.at(i));
 		}
 		for (int i=0;i<N_TTM_Tprime;i++) {
-			if(TTM_Tprime_pt.at(i)>0) hTpt->Fill(TTM_Tprime_pt.at(i),Weight_XS*TTM_Mistagrate_high);
+			if(TTM_Tprime_pt.at(i)>0) hTpt->Fill(TTM_Tprime_pt.at(i),Weight_XS*TTM_Mistagrate.at(i));
 		}
 		for (int i=0;i<N_TTM_separated_highest_per_ak8_bottoms;i++) {
 			if(TTM_separated_highest_per_ak8_bottoms_pt.at(i)>0) hbotpt->Fill(TTM_separated_highest_per_ak8_bottoms_pt.at(i),Weight_XS);
 		}
 		if(TTM_highest_Ws_pt>0) hWpt->Fill(TTM_highest_Ws_pt,Weight_XS);
 		for (int i=0;i<N_TTM_AK8_top_candidates_separated;i++) {
-			if(TTM_AK8_top_candidates_separated_pt.at(i)>0) hak8seppt->Fill(TTM_AK8_top_candidates_separated_pt.at(i),Weight_XS*TTM_Mistagrate_high);
+			if(TTM_AK8_top_candidates_separated_pt.at(i)>0) hak8seppt->Fill(TTM_AK8_top_candidates_separated_pt.at(i),Weight_XS*TTM_Mistagrate.at(i));
 		}
     if(TTM_AK8_top_candidates_highest_pt>0) hak8highpt->Fill(TTM_AK8_top_candidates_highest_pt,Weight_XS*TTM_Mistagrate_high);
     for (int i=0;i<N_Signal_Topfirst_Tops;i++){
@@ -256,17 +256,17 @@ int main()
     
     //eta
 		for (int i=0;i<N_TTM_Zprime;i++) {
-			if(TTM_Zprime_eta.at(i)>0) hZeta->Fill(TTM_Zprime_eta.at(i),Weight_XS*TTM_Mistagrate_high);
+			if(TTM_Zprime_eta.at(i)>0) hZeta->Fill(TTM_Zprime_eta.at(i),Weight_XS*TTM_Mistagrate.at(i));
 		}
 		for (int i=0;i<N_TTM_Tprime;i++) {
-			if(TTM_Tprime_eta.at(i)>0) hTeta->Fill(TTM_Tprime_eta.at(i),Weight_XS*TTM_Mistagrate_high);
+			if(TTM_Tprime_eta.at(i)>0) hTeta->Fill(TTM_Tprime_eta.at(i),Weight_XS*TTM_Mistagrate.at(i));
 		}
 		for (int i=0;i<N_TTM_separated_highest_per_ak8_bottoms;i++) {
 			if(TTM_separated_highest_per_ak8_bottoms_eta.at(i)>0) hboteta->Fill(TTM_separated_highest_per_ak8_bottoms_eta.at(i),Weight_XS);
 		}
 		if(TTM_highest_Ws_eta>0) hWeta->Fill(TTM_highest_Ws_eta,Weight_XS);
 		for (int i=0;i<N_TTM_AK8_top_candidates_separated;i++) {
-			if(TTM_AK8_top_candidates_separated_eta.at(i)>0) hak8sepeta->Fill(TTM_AK8_top_candidates_separated_eta.at(i),Weight_XS*TTM_Mistagrate_high);
+			if(TTM_AK8_top_candidates_separated_eta.at(i)>0) hak8sepeta->Fill(TTM_AK8_top_candidates_separated_eta.at(i),Weight_XS*TTM_Mistagrate.at(i));
 		}
     if(TTM_AK8_top_candidates_highest_eta>0) hak8higheta->Fill(TTM_AK8_top_candidates_highest_eta,Weight_XS*TTM_Mistagrate_high);
     
