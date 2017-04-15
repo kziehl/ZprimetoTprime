@@ -33,19 +33,26 @@ void RStyle::PrintCrossSection(void)
 	fLatex = new TLatex();
 	fLatex->SetTextFont(42);
 	fLatex->SetTextSize(0.04);
-	fLatex->SetTextAlign(31); //left and bottom aligned
+	fLatex->SetTextAlign(31); //right and bottom aligned
 	//fLatex->DrawLatexNDC(gStyle->GetPadLeftMargin(),1-gStyle->GetPadTopMargin()+0.02,"2.69 fb^{-1} (13TeV)");
 	fLatex->DrawLatexNDC(1-gStyle->GetPadRightMargin(),1-gStyle->GetPadTopMargin()+0.02,"37.82 fb^{-1} (13TeV)");
 }
 
 
-void RStyle::PrintCMSPrivateWork(void)
+void RStyle::PrintCMSPrivateWork(const char* corner)
 {
 	fText = new TText();
 	fText->SetTextFont(42);
-	fText->SetTextSize(0.03);
-	fText->SetTextAlign(31); //right and bottom aligned
-	fText->DrawTextNDC(1-gStyle->GetPadRightMargin(),1-gStyle->GetPadTopMargin()+0.02,"CMS Private Work");
+	fText->SetTextSize(0.04);
+	if(strcmp(corner,"r")==0) { 
+		fText->SetTextAlign(31); //right and bottom aligned
+		fText->DrawTextNDC(1-gStyle->GetPadRightMargin(),1-gStyle->GetPadTopMargin()+0.02,"CMS Private Work");
+	} else if(strcmp(corner,"l")==0) {
+		fText->SetTextAlign(11); //left and bottom aligned
+		fText->DrawTextNDC(gStyle->GetPadLeftMargin(),1-gStyle->GetPadTopMargin()+0.02,"CMS Private Work");
+	}
+	else
+		std::cout << "Error in RStyle::PrintCMSPrivateWork: Invalid option" << std::endl;
 }
 
 
@@ -55,14 +62,14 @@ void RStyle::PrintCMSPublicationStatus(TString status)
 	tStr.ReplaceAll("replace",status);
 	fLatex = new TLatex();
 	fLatex->SetTextAlign(13); //left and top aligned
-	fLatex->DrawLatexNDC(gStyle->GetPadLeftMargin()+0.05,1-gStyle->GetPadTopMargin()-0.02,tStr);
+	fLatex->DrawLatexNDC(gStyle->GetPadLeftMargin()+0.04,1-gStyle->GetPadTopMargin()-0.02,tStr);
 }
 
 
 void RStyle::BuildLegend(TH1F* histo,const char* descript,const char* option,const char* corner,Int_t nrows)
 {
 	TString tdescript = descript;
-	Double_t tlengthNDC = tdescript.Length()*0.015; //1 char(here Q) ~ 0.015 NDC
+	Double_t tlengthNDC = tdescript.Length()*0.01; //1 char(here Q) ~ 0.015 NDC
 	if(fLegend==0)
 	{
 		if(strcmp(corner,fLeftDown) == 0) fLegend = new TLegend(gStyle->GetPadLeftMargin(),gStyle->GetPadBottomMargin(),gStyle->GetPadLeftMargin()+tlengthNDC,gStyle->GetPadBottomMargin()+0.08*nrows);

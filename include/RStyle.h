@@ -21,8 +21,8 @@ class RStyle
 		const static char* fRightUp;
 	public:
 		RStyle(){};
-		//prints CMS Private Work above the upper right corner of the frame
-		static void PrintCMSPrivateWork (void);
+		//prints CMS Private Work above the upper right/left corner of the frame
+		static void PrintCMSPrivateWork (const char* corner);
 		//prints CMS in the top left corner below the frame. Below it will be the publication status.
 		static void PrintCMSPublicationStatus (TString status="Private Work");
 		//prints the current Luminosity above the top left corner of the frame

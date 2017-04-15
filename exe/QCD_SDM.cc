@@ -4,21 +4,15 @@
 #include <cstdio>
 #include <cstdlib>
 
-#include "TROOT.h"
+
 #include "TFile.h"
 #include "TString.h"
 #include "TTree.h"
 #include "TH1F.h"
 #include "TCanvas.h"
-#include "TLegend.h"
-#include "TLegendEntry.h"
-#include "THStack.h"
-#include "TText.h"
 #include "TH2F.h"
 #include "TObjArray.h"
 #include "TChain.h"
-#include "TChainElement.h"
-#include "TCollection.h"
 
 #include "plotutil.h"
 
