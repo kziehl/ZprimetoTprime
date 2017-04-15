@@ -250,7 +250,7 @@ int main()
 		}
     if(TTM_AK8_top_candidates_highest_pt>0) hak8highpt->Fill(TTM_AK8_top_candidates_highest_pt,Weight_XS*TTM_Mistagrate_high);
     for (int i=0;i<N_Signal_Topfirst_Tops;i++){
-    	if (Signal_Topfirst_Tops_Pt.at(i)>0) htoppt->Fill(Signal_Topfirst_Tops_Pt.at(i),Weight_XS);
+    	if (Signal_Topfirst_Tops_Pt.at(i)>0) htopspt->Fill(Signal_Topfirst_Tops_Pt.at(i),Weight_XS);
     }
     
     
