@@ -56,8 +56,8 @@ int main()
   chain->SetBranchStatus("TTM_Mistagrate_high",1);  
   chain->SetBranchAddress("TTM_Mistagrate_high",&TTM_Mistagrate_high);
   
-  chain->SetBranchAddress("TTM_Mistagrate",1);
-  chain->SetBranchStatus("TTM_Mistagrate",&(TTM_Mistagrate.front()));
+  chain->SetBranchStatus("TTM_Mistagrate",1);
+  chain->SetBranchAddress("TTM_Mistagrate",&(TTM_Mistagrate.front()));
   
   //vector mass
   chain->SetBranchStatus("TTM_Zprime_M",1);  
@@ -209,64 +209,64 @@ int main()
 		//weights
 		if(Weight_XS>0) hweightxs->Fill(Weight_XS);
 		for (int i=0;i<N_TTM_Mistagrate;i++) {
-			if(TTM_Mistagrate.at(i)>0) hmis->Fill(TTM_Mistagrate);
+			if(TTM_Mistagrate.at(i)>0) hmis->Fill(TTM_Mistagrate.at(i));
 		}
 		if(TTM_Mistagrate_high>0) hmishigh->Fill(TTM_Mistagrate_high);
 		for (int i=0;i<N_TTM_RndmSDM;i++) {
-			if(TTM_RndmSDM.at(i)>0) hsoftdrop->Fill(TTM_RndmSDM);
+			if(TTM_RndmSDM.at(i)>0) hsoftdrop->Fill(TTM_RndmSDM.at(i));
 		}
 		//mass
 		for (int i=0;i<N_TTM_Zprime;i++) {
-			if(TTM_Zprime_M.at(i)>0) hZmass->Fill(TTM_Zprime_M,Weight_XS*TTM_Mistagrate_high);
+			if(TTM_Zprime_M.at(i)>0) hZmass->Fill(TTM_Zprime_M.at(i),Weight_XS*TTM_Mistagrate_high);
 		}
 		if(Signal_Topfirst_Zprime_M>0) hZmassTopfirst->Fill(Signal_Topfirst_Zprime_M,Weight_XS);
 		for (int i=0;i<N_TTM_Tprime;i++) {
-			if(TTM_Tprime_M.at(i)>0) hTmass->Fill(TTM_Tprime_M,Weight_XS*TTM_Mistagrate_high);
+			if(TTM_Tprime_M.at(i)>0) hTmass->Fill(TTM_Tprime_M.at(i),Weight_XS*TTM_Mistagrate_high);
 		}
 		if(Signal_Topfirst_Tprime_M>0) hTmassTopfirst->Fill(Signal_Topfirst_Tprime_M,Weight_XS);
 		for (int i=0;i<N_TTM_separated_highest_per_ak8_bottoms;i++) {
-			if(TTM_separated_highest_per_ak8_bottoms_M.at(i)>0) hbotmass->Fill(TTM_separated_highest_per_ak8_bottoms_M,Weight_XS);
+			if(TTM_separated_highest_per_ak8_bottoms_M.at(i)>0) hbotmass->Fill(TTM_separated_highest_per_ak8_bottoms_M.at(i),Weight_XS);
 		}
 		if(TTM_highest_Ws_M>0) hWmass->Fill(TTM_highest_Ws_M,Weight_XS);
 		for (int i=0;i<N_TTM_AK8_top_candidates_separated;i++) {
-			if(TTM_AK8_top_candidates_separated_M.at(i)>0) hak8sep->Fill(TTM_AK8_top_candidates_separated_M,Weight_XS*TTM_Mistagrate_high);
+			if(TTM_AK8_top_candidates_separated_M.at(i)>0) hak8sep->Fill(TTM_AK8_top_candidates_separated_M.at(i),Weight_XS*TTM_Mistagrate_high);
 		}
     if(TTM_AK8_top_candidates_highest_M>0) hak8high->Fill(TTM_AK8_top_candidates_highest_M,Weight_XS*TTM_Mistagrate_high);
     
     
     //pt
 		for (int i=0;i<N_TTM_Zprime;i++) {
-			if(TTM_Zprime_pt.at(i)>0) hZpt->Fill(TTM_Zprime_pt,Weight_XS*TTM_Mistagrate_high);
+			if(TTM_Zprime_pt.at(i)>0) hZpt->Fill(TTM_Zprime_pt.at(i),Weight_XS*TTM_Mistagrate_high);
 		}
 		for (int i=0;i<N_TTM_Tprime;i++) {
-			if(TTM_Tprime_pt.at(i)>0) hTpt->Fill(TTM_Tprime_pt,Weight_XS*TTM_Mistagrate_high);
+			if(TTM_Tprime_pt.at(i)>0) hTpt->Fill(TTM_Tprime_pt.at(i),Weight_XS*TTM_Mistagrate_high);
 		}
 		for (int i=0;i<N_TTM_separated_highest_per_ak8_bottoms;i++) {
-			if(TTM_separated_highest_per_ak8_bottoms_pt.at(i)>0) hbotpt->Fill(TTM_separated_highest_per_ak8_bottoms_pt,Weight_XS);
+			if(TTM_separated_highest_per_ak8_bottoms_pt.at(i)>0) hbotpt->Fill(TTM_separated_highest_per_ak8_bottoms_pt.at(i),Weight_XS);
 		}
 		if(TTM_highest_Ws_pt>0) hWpt->Fill(TTM_highest_Ws_pt,Weight_XS);
 		for (int i=0;i<N_TTM_AK8_top_candidates_separated;i++) {
-			if(TTM_AK8_top_candidates_separated_pt.at(i)>0) hak8seppt->Fill(TTM_AK8_top_candidates_separated_pt,Weight_XS*TTM_Mistagrate_high);
+			if(TTM_AK8_top_candidates_separated_pt.at(i)>0) hak8seppt->Fill(TTM_AK8_top_candidates_separated_pt.at(i),Weight_XS*TTM_Mistagrate_high);
 		}
     if(TTM_AK8_top_candidates_highest_pt>0) hak8highpt->Fill(TTM_AK8_top_candidates_highest_pt,Weight_XS*TTM_Mistagrate_high);
     for (int i=0;i<N_Signal_Topfirst_Tops;i++){
-    	if (Signal_Topfirst_Tops_Pt.at(i)>0) htoppt->Fill(Signal_Topfirst_Tops_Pt,Weight_XS);
+    	if (Signal_Topfirst_Tops_Pt.at(i)>0) htoppt->Fill(Signal_Topfirst_Tops_Pt.at(i),Weight_XS);
     }
     
     
     //eta
 		for (int i=0;i<N_TTM_Zprime;i++) {
-			if(TTM_Zprime_eta.at(i)>0) hZeta->Fill(TTM_Zprime_eta,Weight_XS*TTM_Mistagrate_high);
+			if(TTM_Zprime_eta.at(i)>0) hZeta->Fill(TTM_Zprime_eta.at(i),Weight_XS*TTM_Mistagrate_high);
 		}
 		for (int i=0;i<N_TTM_Tprime;i++) {
-			if(TTM_Tprime_eta.at(i)>0) hTeta->Fill(TTM_Tprime_eta,Weight_XS*TTM_Mistagrate_high);
+			if(TTM_Tprime_eta.at(i)>0) hTeta->Fill(TTM_Tprime_eta.at(i),Weight_XS*TTM_Mistagrate_high);
 		}
 		for (int i=0;i<N_TTM_separated_highest_per_ak8_bottoms;i++) {
-			if(TTM_separated_highest_per_ak8_bottoms_eta.at(i)>0) hboteta->Fill(TTM_separated_highest_per_ak8_bottoms_eta,Weight_XS);
+			if(TTM_separated_highest_per_ak8_bottoms_eta.at(i)>0) hboteta->Fill(TTM_separated_highest_per_ak8_bottoms_eta.at(i),Weight_XS);
 		}
 		if(TTM_highest_Ws_eta>0) hWeta->Fill(TTM_highest_Ws_eta,Weight_XS);
 		for (int i=0;i<N_TTM_AK8_top_candidates_separated;i++) {
-			if(TTM_AK8_top_candidates_separated_eta.at(i)>0) hak8sepeta->Fill(TTM_AK8_top_candidates_separated_eta,Weight_XS*TTM_Mistagrate_high);
+			if(TTM_AK8_top_candidates_separated_eta.at(i)>0) hak8sepeta->Fill(TTM_AK8_top_candidates_separated_eta.at(i),Weight_XS*TTM_Mistagrate_high);
 		}
     if(TTM_AK8_top_candidates_highest_eta>0) hak8higheta->Fill(TTM_AK8_top_candidates_highest_eta,Weight_XS*TTM_Mistagrate_high);
     
@@ -303,7 +303,7 @@ int main()
   hbotmass->Write("QCD_TTM_bottom_M");
   hak8sep->Write("QCD_TTM_AK8_sep_M");
   hWmass->Write("QCD_TTM_Ws_M");
-  hak8high->Wrte("QCD_TTM_Ak8_high_M");
+  hak8high->Write("QCD_TTM_Ak8_high_M");
 	//pt
 	hZpt->Write("QCD_TTM_zprime_pt");
   hTpt->Write("QCD_TTM_tprime_pt");
@@ -322,7 +322,7 @@ int main()
   //length
   hNmis->Write("QCD_N_mistag");
   hNzprime->Write("QCD_N_ttm_zprime");
-  TH1hNtprime->Write("QCD_N_ttm_tprime");
+  hNtprime->Write("QCD_N_ttm_tprime");
   hNbot->Write("QCD_N_ttm_bottom");
   hNsoft->Write("QCD_N_softdrop");
   hNak8sep->Write("QCD_N_ak8_sep");
