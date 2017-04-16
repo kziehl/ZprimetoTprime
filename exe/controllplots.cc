@@ -19,7 +19,7 @@ using namespace std;
 int main()
 {
 	// create root file in which the histograms will be saved
-	TFile *file = new TFile("/nfs/dust/cms/user/kziehl/plots/bkg_estimation/rootfile/ak8candidate_top_comparison.root","RECREATE");
+	TFile *file = new TFile("/nfs/dust/cms/user/kziehl/plots/bkg_estimation/rootfile/ak8candidate_separated_top_comparison.root","RECREATE");
 	
 	
 	//Load data files
@@ -29,9 +29,9 @@ int main()
 
   
   //variables
-  Float_t Weight_XS{0},TTM_Zprime_M{0},TTM_Mistagrate{0},TTM_AK8_top_candidates_highest_pt{0},Signal_Topfirst_Zprime_M{0};
-  Int_t N_Signal_Topfirst_Tops{0},N_AK8_top_candidates{0};;
-  vector <Float_t> Signal_Topfirst_Tops_Pt(1000),AK8_top_candidates_pt(1000);
+  Float_t Weight_XS{0},TTM_Mistagrate_high{0};
+  Int_t N_Signal_Topfirst_Tops{0},N_TTM_Mistagrate{0},N_TTM_Zprime{0},N_TTM_AK8_top_candidates_separated{0};
+  vector <Float_t> Signal_Topfirst_Tops_Pt(1000),TTM_Zprime_M(100),TTM_Mistagrate(100),TTM_AK8_top_candidates_separated_M(100);
   
   
   //Set branches
@@ -40,41 +40,49 @@ int main()
   chain->SetBranchStatus("Weight_XS",1);  
   chain->SetBranchAddress("Weight_XS",&Weight_XS);
   
+  chain->SetBranchStatus("TTM_Mistagrate_high",1);  
+  chain->SetBranchAddress("TTM_Mistagrate_high",&TTM_Mistagrate_high);
+  
   chain->SetBranchStatus("TTM_Mistagrate",1);  
-  chain->SetBranchAddress("TTM_Mistagrate",&TTM_Mistagrate);
+  chain->SetBranchAddress("TTM_Mistagrate",&(TTM_Mistagrate.front());
   
   chain->SetBranchStatus("TTM_Zprime_M",1);  
   chain->SetBranchAddress("TTM_Zprime_M",&TTM_Zprime_M);
   
+  chain->SetBranchStatus("N_TTM_Zprime",1);  
+  chain->SetBranchAddress("N_TTM_Zprime",&N_TTM_Zprime);
+  
+  chain->SetBranchStatus("N_TTM_AK8_top_candidates_separated",1);  
+  chain->SetBranchAddress("N_TTM_AK8_top_candidates_separated",&N_TTM_AK8_top_candidates_separated);
+  
+  chain->SetBranchStatus("TTM_AK8_top_candidates_separated_M",1);  
+  chain->SetBranchAddress("TTM_AK8_top_candidates_separated_M",&(TTM_AK8_top_candidates_separated_M.front()));
+  
   chain->SetBranchStatus("N_Signal_Topfirst_Tops",1);
   chain->SetBranchAddress("N_Signal_Topfirst_Tops",&N_Signal_Topfirst_Tops);
   
-  chain->SetBranchStatus("N_AK8_top_candidates",1);
-  chain->SetBranchAddress("N_AK8_top_candidates",&N_AK8_top_candidates);
+  chain->SetBranchStatus("N_TTM_Mistagrate",1);
+  chain->SetBranchAddress("N_TTM_Mistagrate",&N_TTM_Mistagrate);
   
   chain->SetBranchStatus("Signal_Topfirst_Tops_Pt",1);
   chain->SetBranchAddress("Signal_Topfirst_Tops_Pt",&(Signal_Topfirst_Tops_Pt.front()));
   
   chain->SetBranchStatus("AK8_top_candidates_pt",1);
   chain->SetBranchAddress("AK8_top_candidates_pt",&(AK8_top_candidates_pt.front()));
-  
-  chain->SetBranchStatus("TTM_AK8_top_candidates_highest_pt",1);  
-  chain->SetBranchAddress("TTM_AK8_top_candidates_highest_pt",&TTM_AK8_top_candidates_highest_pt);
+
   
   
   //creating histograms
 	TH1F* hAK8pt = new TH1F("hAK8pt","Pt of AK8 Jets with the highest p_{T}",100,0,5000);
 	TH1F* htoppt = new TH1F("htoppt","pt of top jet",100,0,5000);
-	TH1F* hAK8pthigh = new TH1F("hAK8pthigh","Pt of AK8 Jets with the highest p_{T}",100,0,5000);
-	TH1F* htoppthigh = new TH1F("htoppthigh","pt of top jet",100,0,5000);
+
 
 
     
   //store sum of squares of weight
   hAK8pt->Sumw2();
   htoppt->Sumw2();
-  hAK8pthigh->Sumw2();
-  htoppthigh->Sumw2();
+
   
  
  	// sum over entries and fill histogramms
@@ -84,19 +92,14 @@ int main()
   {
 		chain->GetEntry(iEntry);
 		
-		if(TTM_Zprime_M>0) {
-			for (Int_t iEvent=0;iEvent<N_AK8_top_candidates;iEvent++) {
-				hAK8pt->Fill(AK8_top_candidates_pt.at(iEvent),Weight_XS);
-			}
+		for (int iEv=0;iEv<N_TTM_Zprime;iEv++) {
+			if (TTM_Zprime_M.at(iEv)>0) hAK8pt->Fill(TTM_AK8_top_candidates_separated_M.at(iEv),Weight_XS*TTM_Mistagrate.at(iEv));
 		}
 		
 		for (Int_t iEvent=0;iEvent<N_Signal_Topfirst_Tops;iEvent++) {
 			if (Signal_Topfirst_Tops_Pt.at(iEvent)>0) htoppt->Fill(Signal_Topfirst_Tops_Pt.at(iEvent),Weight_XS);
 			}
-		
-	// highest pt
-	if(Signal_Topfirst_Tops_Pt.at(0)>0) htoppthigh->Fill(Signal_Topfirst_Tops_Pt.at(0),Weight_XS);
-	if(TTM_AK8_top_candidates_highest_pt>0) hAK8pthigh->Fill(TTM_AK8_top_candidates_highest_pt,Weight_XS*TTM_Mistagrate);
+
     	
      if(iEntry%100000==0)
      {
@@ -109,8 +112,7 @@ int main()
   file->cd();
 	hAK8pt->Write("AK8pt");
   htoppt->Write("top_pt");
-  hAK8pthigh->Write("AK8_highest_pt");
-  htoppthigh->Write("top_highest_pt");
+
   
   file->Close();
   

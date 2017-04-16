@@ -19,7 +19,7 @@ using namespace std;
 int main()
 {
 	// create root file in which the histograms will be saved
-	TFile *file = new TFile("/nfs/dust/cms/user/kziehl/plots/bkg_estimation/rootfile/number_of_entries.root","RECREATE");
+	TFile *file = new TFile("/nfs/dust/cms/user/kziehl/plots/bkg_estimation/rootfile/number_of_entries_ak8sep_tops.root","RECREATE");
 	
 	
 	//Load data files
@@ -27,29 +27,26 @@ int main()
 	std::cout << "Number of Entries in QCD samples: " << chain->GetEntries() << std::endl;
 
 
-  
   //variables
-  Float_t Weight_XS{0},TTM_Zprime_M{0},TTM_Mistagrate{0},TTM_separated_highest_bottoms_M{0},TTM_AK8_top_candidates_highest_pt{0},TTM_highest_Ws_M{0},TTM_no_top_separated_highest_bottoms_M{0},TTM_no_top_Zprime_M{0},Signal_Topfirst_Zprime_M{0},TTM_Tprime_M{0},TTM_no_top_Tprime_M{0},Signal_Topfirst_Tprime_M{0};
-  Int_t N_Signal_Topfirst_Tops{0},N_AK8_top_candidates{0};
-  vector <Float_t> Signal_Topfirst_Tops_Pt(1000);
+  Int_t N_Signal_Topfirst_Tops{0},N_TTM_Zprime{0},N_TTM_AK8_top_candidates_separated{0};
+  vector <Float_t> TTM_Zprime_M(100);
+  
   
   //Set branches
   chain->SetBranchStatus("*",0);
-  
-  chain->SetBranchStatus("Weight_XS",1);  
-  chain->SetBranchAddress("Weight_XS",&Weight_XS);
-  
-  chain->SetBranchStatus("TTM_Mistagrate",1);  
-  chain->SetBranchAddress("TTM_Mistagrate",&TTM_Mistagrate);
-  
+
   chain->SetBranchStatus("TTM_Zprime_M",1);  
   chain->SetBranchAddress("TTM_Zprime_M",&TTM_Zprime_M);
   
+  chain->SetBranchStatus("N_TTM_Zprime",1);  
+  chain->SetBranchAddress("N_TTM_Zprime",&N_TTM_Zprime);
+  
+  chain->SetBranchStatus("N_TTM_AK8_top_candidates_separated",1);  
+  chain->SetBranchAddress("N_TTM_AK8_top_candidates_separated",&N_TTM_AK8_top_candidates_separated);
+  
   chain->SetBranchStatus("N_Signal_Topfirst_Tops",1);
   chain->SetBranchAddress("N_Signal_Topfirst_Tops",&N_Signal_Topfirst_Tops);
-  
-	chain->SetBranchStatus("N_AK8_top_candidates",1);
-	chain->SetBranchAddress("N_AK8_top_candidates",&N_AK8_top_candidates);
+
   
   
   //creating histograms
@@ -66,9 +63,11 @@ int main()
   {
 		chain->GetEntry(iEntry);
 		
-		if(TTM_Zprime_M>0) {
-			hnumbertops->Fill(N_Signal_Topfirst_Tops);
-			hnumberak8->Fill(N_AK8_top_candidates);
+		for (int i=0;i<N_TTM_Zprime;i++){
+			if (TTM_Zprime_M.at(i)>0) {
+				hnumberak8->Fill(N_TTM_AK8_top_candidates_separated);
+				hnumbertops->Fill(N_Signal_Topfirst_Tops);
+			}
 		}
 		
     

@@ -25,24 +25,10 @@ void Ratioplots()
 	TH1F* h7 = dynamic_cast<TH1F*>(file->Get("QCD_Signal_Topfirst_Tprime_M"));
 	TH1F* h8 = dynamic_cast<TH1F*>(file->Get("QCD_TTM_Tprime_M"));
 	
-	//h7->Scale(1/h7->Integral());
-	//h8->Scale(1/h8->Integral());
-	
-	//gRUtil->PrintRatioPlot(h7,h8);
-	//gRUtil->PrintRatioPlot(h1,h3);
-	//gRUtil->PrintRatioPlot(h3,h2);
-	//h1->SetTitle("A simple Ratio");
-	
-	h5->Divide(h6);
-	h5->SetStats(false);
-	h5->Draw("lego");
-	gRStyle->PrintCrossSection();
-	gRStyle->PrintCMSPublicationStatus("Private Work");
-	
-	//h4->Draw("histe");
-		//gRStyle->PrintCMSPublicationStatus("Private Work");
-	//gRStyle->BuildLegend(h7,"QCD Mistag","l","RightUp",2);
-	//gRStyle->BuildLegend(h8,"QCD Prediction","l");
+	gRUtil->PrintRatioPlot(h1,h2);
+	//template: 	gRStyle->BuildLegend(tHisto,"m_{Z'}=2.5 TeV, m_{T}=1.5TeV","fe","RightUp",4);
+	gRStyle->BuildLegend(h1,"teso","l","RightUp",2);
+	gRStyle->BuildLegend(h2,"jkjk");
 
 	
 }

@@ -53,42 +53,83 @@ Double_t RUtil::GetMaxValOfVar (TChain* chain, const char* variable, const char*
     return MaxVal;
 }
 //TODO: How to change labels? Maybe shift some of the style settings in the exe file
-void RUtil::PrintRatioPlot(TH1F* histo1,TH1F* histo2)
+void RUtil::PrintRatioPlot(TH1F* histo1,TH1F* histo2,const char* titleyaxis,const char* titlexaxis, const char* titleratioy)
 {
+	if (histo1->GetSize() != histo2->GetSize()) {
+		std::cout << "Failed to add histograms with different number of bins" << std::endl;
+		return;
+	}
+	gStyle->SetOptStat(false);
+	gStyle->SetErrorX(false);
 	// canvas
-	TCanvas *c1 = new TCanvas();
+	TCanvas *c1 = new TCanvas("c1","c1",800,800);
 	c1->SetTicks(0,0);
-	TRatioPlot* Ratio = new TRatioPlot(histo1,histo2,"divsym");
-	// hist style
-	histo1->SetTitle("");
-	histo1->SetStats(false);
+	
+	//pad 1 contains graphic
+	TPad *pad1 = new TPad("pad1","pad1",0.,0.4,1.,1.0);
+	pad1->SetBottomMargin(0);
+	pad1->Draw();
+	pad1->cd();
+	//style histo1
 	histo1->SetLineWidth(2);
+	histo1->SetLineColor(2);
+	histo1->SetTitle("");
+	//x axis histo 1
+	histo1->GetXaxis()->SetRangeUser(500,4000);
+	//y axis histo 1
+	histo1->GetYaxis()->SetTitle(titleyaxis);
+	histo1->GetYaxis()->ChangeLabel(1,-1,0); //suppress printing 0
+	histo1->SetLabelSize(0.06,"y");
+	histo1->SetTitleSize(0.07,"y");
+	histo1->SetTitleOffset(0.7,"y");
+	histo1->GetYaxis()->SetRangeUser(0,3000);
+	//draw
 	histo1->Scale(37.82);
-	histo1->SetLineColor(4); // blue
-	histo1->GetXaxis()->SetTitle("m_{T} in GeV");//m_{Z'} in GeV
-	histo1->GetYaxis()->SetTitle("Events");
+	histo1->Draw("histe");
+	//histo 2 style
 	histo2->SetLineWidth(2);
+	histo2->SetLineColor(4);
 	histo2->Scale(37.82);
-	histo2->SetLineColor(2); // red
-	//histo2->SetMarkerStyle(8);
-	//Ratio Style
-	Ratio->SetSeparationMargin(0);
-	Ratio->SetH2DrawOpt("histe1");
-	Ratio->SetH1DrawOpt("histe1");
-	Ratio->Draw("fhideup");
-	// style of graph
-	Ratio->GetLowerRefGraph()->SetMinimum(0.5);
-	Ratio->GetLowerRefGraph()->SetMaximum(1.5);
-	Ratio->GetLowerRefGraph()->SetLineColor(1);
-	Ratio->GetLowYaxis()->SetNdivisions(305); 
-	//Ratio->GetLowerRefYaxis()->ChangeLabel(1,-1,0);
-	//Number of grid lines
-	std::vector<double> lines = {1};
-	Ratio->SetGridlines(lines);
+	histo2->Draw("histe same");
 	// Style
-	Ratio->GetUpperPad()->cd();
 	gRStyle->PrintCrossSection();
-	gRStyle->PrintCMSPublicationStatus("Private Work");
+	gRStyle->PrintCMSPrivateWork("l");
+	gRStyle->PrintCMSPublicationStatus("Simulation");
+
+	// ratio plot in pad 2
+	c1->cd();
+	TPad *pad2 = new TPad("pad2","pad2",0.,0.0,1.,0.4);
+	pad2->SetBottomMargin(0.3);
+	pad2->SetTopMargin(0);
+	pad2->Draw();
+	pad2->cd();
+	//ratio plot options
+	TH1F * hratio = new TH1F("hratio","hratio",histo2->GetSize()-2,histo2->GetXaxis()->GetXmin(),histo2->GetXaxis()->GetXmax());
+	hratio->Divide(histo1,histo2);
+	hratio->SetMarkerStyle(8);
+	hratio->SetTitle("");
+	hratio->SetMarkerSize(0.8);
+	hratio->SetMinimum(0);
+	hratio->SetMaximum(2.0);
+	hratio->SetLineColor(1);
+	hratio->SetLabelSize(0.09,"yx");
+	hratio->GetXaxis()->SetRangeUser(500,4000);
+	hratio->GetYaxis()->SetNdivisions(-204); 
+	hratio->GetYaxis()->ChangeLabel(1,-1,0);
+	hratio->GetYaxis()->ChangeLabel(5,-1,0);
+	hratio->GetYaxis()->SetTitleSize(0.1);
+	hratio->GetXaxis()->SetTitleSize(0.1);
+	hratio->GetYaxis()->SetTitle(titleratioy);
+	hratio->GetXaxis()->SetTitle(titlexaxis);
+	hratio->GetYaxis()->SetTitleOffset(0.41);
+	hratio->GetYaxis()->CenterTitle(true);
+	hratio->Draw("pe same");
+	//lateral line
+	TLine *lratio = new TLine(500,1,4000,1);
+	lratio->SetLineColor(1);
+	lratio->SetLineStyle(2);
+	lratio->Draw("same");
+	pad1->cd();
 }
 
 
@@ -96,6 +137,7 @@ TH1F* RUtil::DrawStackPlot(TH1F* histo1, TH1F* histo2,TH1F* histo3)
 {
 	if (histo1->GetSize() != histo2->GetSize()) {
 		std::cout << "Failed to add histograms with different number of bins" << std::endl;
+		return 0; //TODO:this will cause an error!
 	}
 	// adding histograms + style
 	TH1F* tHisto = new TH1F("tHisto","tHisto",histo1->GetSize()-2,histo1->GetXaxis()->GetXmin(),histo1->GetXaxis()->GetXmax());

@@ -46,10 +46,10 @@ void RStyle::PrintCMSPrivateWork(const char* corner)
 	fText->SetTextSize(0.04);
 	if(strcmp(corner,"r")==0) { 
 		fText->SetTextAlign(31); //right and bottom aligned
-		fText->DrawTextNDC(1-gStyle->GetPadRightMargin(),1-gStyle->GetPadTopMargin()+0.02,"CMS Private Work");
+		fText->DrawTextNDC(1-gStyle->GetPadRightMargin(),1-gStyle->GetPadTopMargin()+0.02,"Private Work");
 	} else if(strcmp(corner,"l")==0) {
 		fText->SetTextAlign(11); //left and bottom aligned
-		fText->DrawTextNDC(gStyle->GetPadLeftMargin(),1-gStyle->GetPadTopMargin()+0.02,"CMS Private Work");
+		fText->DrawTextNDC(gStyle->GetPadLeftMargin(),1-gStyle->GetPadTopMargin()+0.02,"Private Work");
 	}
 	else
 		std::cout << "Error in RStyle::PrintCMSPrivateWork: Invalid option" << std::endl;
