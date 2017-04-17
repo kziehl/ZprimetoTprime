@@ -64,7 +64,7 @@ int main()
 		chain->GetEntry(iEntry);
 		
 		for (int i=0;i<N_TTM_Zprime;i++){
-			if (TTM_Zprime_M.at(i)>0) {
+			if (i==0 && TTM_Zprime_M.at(i)>0) {
 				hnumberak8->Fill(N_TTM_AK8_top_candidates_separated);
 				hnumbertops->Fill(N_Signal_Topfirst_Tops);
 			}
