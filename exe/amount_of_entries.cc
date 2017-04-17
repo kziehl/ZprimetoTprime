@@ -36,7 +36,7 @@ int main()
   chain->SetBranchStatus("*",0);
 
   chain->SetBranchStatus("TTM_Zprime_M",1);  
-  chain->SetBranchAddress("TTM_Zprime_M",&TTM_Zprime_M);
+  chain->SetBranchAddress("TTM_Zprime_M",&(TTM_Zprime_M.front()));
   
   chain->SetBranchStatus("N_TTM_Zprime",1);  
   chain->SetBranchAddress("N_TTM_Zprime",&N_TTM_Zprime);
