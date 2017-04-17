@@ -16,7 +16,7 @@ void Stackplot()
 	//no stat box
 	gStyle->SetOptStat(0);
 	// load file
-	TFile *file = new TFile("/home/kevin/Desktop/file/analysis_mistagrate_via_all");
+	TFile *file = new TFile("/home/kevin/Desktop/file/analysis_mistagrate_all.root");
 	//create histograms
 	TH1F* httm = dynamic_cast<TH1F*>(file->Get("QCD_TTM_Zprime_mistag_all_M"));
 	TH1F* hfirst = dynamic_cast<TH1F*>(file->Get("QCD_Signal_topfirst_zprime_M"));
