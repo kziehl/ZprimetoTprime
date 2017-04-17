@@ -19,7 +19,7 @@ using namespace std;
 int main()
 {
 	// create root file in which the histograms will be saved
-	TFile *file = new TFile("/nfs/dust/cms/user/kziehl/plots/bkg_estimation/rootfile/ak8candidate_separated_top_comparison.root","RECREATE");
+	TFile *file = new TFile("/nfs/dust/cms/user/kziehl/plots/bkg_estimation/rootfile/ak8candidate_separated_top_comparison_mistag_all.root","RECREATE");
 	
 	
 	//Load data files
@@ -31,7 +31,7 @@ int main()
   //variables
   Float_t Weight_XS{0},TTM_Mistagrate_high{0};
   Int_t N_Signal_Topfirst_Tops{0},N_TTM_Mistagrate{0},N_TTM_Zprime{0},N_TTM_AK8_top_candidates_separated{0};
-  vector <Float_t> Signal_Topfirst_Tops_Pt(1000),TTM_Zprime_M(100),TTM_Mistagrate(100),TTM_AK8_top_candidates_separated_M(100);
+  vector <Float_t> Signal_Topfirst_Tops_Pt(1000),TTM_Zprime_M(100),TTM_Mistagrate(100),TTM_AK8_top_candidates_separated_pt(100);
   
   
   //Set branches
@@ -44,7 +44,7 @@ int main()
   chain->SetBranchAddress("TTM_Mistagrate_high",&TTM_Mistagrate_high);
   
   chain->SetBranchStatus("TTM_Mistagrate",1);  
-  chain->SetBranchAddress("TTM_Mistagrate",&(TTM_Mistagrate.front());
+  chain->SetBranchAddress("TTM_Mistagrate",&(TTM_Mistagrate.front()));
   
   chain->SetBranchStatus("TTM_Zprime_M",1);  
   chain->SetBranchAddress("TTM_Zprime_M",&TTM_Zprime_M);
@@ -55,8 +55,8 @@ int main()
   chain->SetBranchStatus("N_TTM_AK8_top_candidates_separated",1);  
   chain->SetBranchAddress("N_TTM_AK8_top_candidates_separated",&N_TTM_AK8_top_candidates_separated);
   
-  chain->SetBranchStatus("TTM_AK8_top_candidates_separated_M",1);  
-  chain->SetBranchAddress("TTM_AK8_top_candidates_separated_M",&(TTM_AK8_top_candidates_separated_M.front()));
+  chain->SetBranchStatus("TTM_AK8_top_candidates_separated_pt",1);  
+  chain->SetBranchAddress("TTM_AK8_top_candidates_separated_pt",&(TTM_AK8_top_candidates_separated_pt.front()));
   
   chain->SetBranchStatus("N_Signal_Topfirst_Tops",1);
   chain->SetBranchAddress("N_Signal_Topfirst_Tops",&N_Signal_Topfirst_Tops);
@@ -66,9 +66,7 @@ int main()
   
   chain->SetBranchStatus("Signal_Topfirst_Tops_Pt",1);
   chain->SetBranchAddress("Signal_Topfirst_Tops_Pt",&(Signal_Topfirst_Tops_Pt.front()));
-  
-  chain->SetBranchStatus("AK8_top_candidates_pt",1);
-  chain->SetBranchAddress("AK8_top_candidates_pt",&(AK8_top_candidates_pt.front()));
+
 
   
   
@@ -93,11 +91,11 @@ int main()
 		chain->GetEntry(iEntry);
 		
 		for (int iEv=0;iEv<N_TTM_Zprime;iEv++) {
-			if (TTM_Zprime_M.at(iEv)>0) hAK8pt->Fill(TTM_AK8_top_candidates_separated_M.at(iEv),Weight_XS*TTM_Mistagrate.at(iEv));
+			if (iEv==0 && TTM_Zprime_M.at(iEv)>0) hAK8pt->Fill(TTM_AK8_top_candidates_separated_pt.at(iEv),Weight_XS*TTM_Mistagrate.at(iEv));
 		}
 		
 		for (Int_t iEvent=0;iEvent<N_Signal_Topfirst_Tops;iEvent++) {
-			if (Signal_Topfirst_Tops_Pt.at(iEvent)>0) htoppt->Fill(Signal_Topfirst_Tops_Pt.at(iEvent),Weight_XS);
+			if (iEvent==0 && Signal_Topfirst_Tops_Pt.at(iEvent)>0) htoppt->Fill(Signal_Topfirst_Tops_Pt.at(iEvent),Weight_XS);
 			}
 
     	

@@ -19,14 +19,14 @@ using namespace std;
 int main()
 {
 	// create root file in which the histograms will be saved
-	TFile *file = new TFile("/nfs/dust/cms/user/kziehl/plots/bkg_estimation/rootfile/analysis_QCD_16_3_mistagrate_high.root","RECREATE");
+	TFile *file = new TFile("/nfs/dust/cms/user/kziehl/plots/bkg_estimation/rootfile/analysis_Zprime_1500_1200_16_3_mistagrate_high.root","RECREATE");
 	
 	
 	//Load data files
-	TChain	*chain = gRLoader->GetQCDFiles();
+	//TChain	*chain = gRLoader->GetQCDFiles();//GetTTbarFiles GetQCDFilesh
 	//std::cout << "Number of Entries in chain: " << chain->GetEntries() << std::endl;
-	//TFile f("/nfs/dust/cms/user/kziehl/processed_MC/ntuples_3_29/Signal_Zprime/Zprime_2500_1500_nominal_Tree.root");
-	//TTree *chain =(TTree*)f.Get("MVATree");
+	TFile f("/nfs/dust/cms/user/kziehl/processed_MC/ntuples_4_16/Signal_Zprime/Zprime_1500_1200_nominal_Tree.root");
+	TTree *chain =(TTree*)f.Get("MVATree");
 
   
   //variables
@@ -217,11 +217,11 @@ int main()
 		}
 		//mass
 		for (int i=0;i<N_TTM_Zprime;i++) {
-			if(TTM_Zprime_M.at(i)>0) hZmass->Fill(TTM_Zprime_M.at(i),Weight_XS*TTM_Mistagrate.at(i));
+			if(i==0 && TTM_Zprime_M.at(i)>0) hZmass->Fill(TTM_Zprime_M.at(i),Weight_XS*TTM_Mistagrate.at(i));
 		}
 		if(Signal_Topfirst_Zprime_M>0) hZmassTopfirst->Fill(Signal_Topfirst_Zprime_M,Weight_XS);
 		for (int i=0;i<N_TTM_Tprime;i++) {
-			if(TTM_Tprime_M.at(i)>0) hTmass->Fill(TTM_Tprime_M.at(i),Weight_XS*TTM_Mistagrate.at(i));
+			if(i==0 && TTM_Tprime_M.at(i)>0) hTmass->Fill(TTM_Tprime_M.at(i),Weight_XS*TTM_Mistagrate.at(i));
 		}
 		if(Signal_Topfirst_Tprime_M>0) hTmassTopfirst->Fill(Signal_Topfirst_Tprime_M,Weight_XS);
 		for (int i=0;i<N_TTM_separated_highest_per_ak8_bottoms;i++) {
@@ -229,24 +229,24 @@ int main()
 		}
 		if(TTM_highest_Ws_M>0) hWmass->Fill(TTM_highest_Ws_M,Weight_XS);
 		for (int i=0;i<N_TTM_AK8_top_candidates_separated;i++) {
-			if(TTM_AK8_top_candidates_separated_M.at(i)>0) hak8sep->Fill(TTM_AK8_top_candidates_separated_M.at(i),Weight_XS*TTM_Mistagrate.at(i));
+			if(i==0 && TTM_AK8_top_candidates_separated_M.at(i)>0) hak8sep->Fill(TTM_AK8_top_candidates_separated_M.at(i),Weight_XS*TTM_Mistagrate.at(i));
 		}
     if(TTM_AK8_top_candidates_highest_M>0) hak8high->Fill(TTM_AK8_top_candidates_highest_M,Weight_XS*TTM_Mistagrate_high);
     
     
     //pt
 		for (int i=0;i<N_TTM_Zprime;i++) {
-			if(TTM_Zprime_pt.at(i)>0) hZpt->Fill(TTM_Zprime_pt.at(i),Weight_XS*TTM_Mistagrate.at(i));
+			if(i==0 && TTM_Zprime_pt.at(i)>0) hZpt->Fill(TTM_Zprime_pt.at(i),Weight_XS*TTM_Mistagrate.at(i));
 		}
 		for (int i=0;i<N_TTM_Tprime;i++) {
-			if(TTM_Tprime_pt.at(i)>0) hTpt->Fill(TTM_Tprime_pt.at(i),Weight_XS*TTM_Mistagrate.at(i));
+			if(i==0 && TTM_Tprime_pt.at(i)>0) hTpt->Fill(TTM_Tprime_pt.at(i),Weight_XS*TTM_Mistagrate.at(i));
 		}
 		for (int i=0;i<N_TTM_separated_highest_per_ak8_bottoms;i++) {
 			if(TTM_separated_highest_per_ak8_bottoms_pt.at(i)>0) hbotpt->Fill(TTM_separated_highest_per_ak8_bottoms_pt.at(i),Weight_XS);
 		}
 		if(TTM_highest_Ws_pt>0) hWpt->Fill(TTM_highest_Ws_pt,Weight_XS);
 		for (int i=0;i<N_TTM_AK8_top_candidates_separated;i++) {
-			if(TTM_AK8_top_candidates_separated_pt.at(i)>0) hak8seppt->Fill(TTM_AK8_top_candidates_separated_pt.at(i),Weight_XS*TTM_Mistagrate.at(i));
+			if(i==0 && TTM_AK8_top_candidates_separated_pt.at(i)>0) hak8seppt->Fill(TTM_AK8_top_candidates_separated_pt.at(i),Weight_XS*TTM_Mistagrate.at(i));
 		}
     if(TTM_AK8_top_candidates_highest_pt>0) hak8highpt->Fill(TTM_AK8_top_candidates_highest_pt,Weight_XS*TTM_Mistagrate_high);
     for (int i=0;i<N_Signal_Topfirst_Tops;i++){
@@ -256,17 +256,17 @@ int main()
     
     //eta
 		for (int i=0;i<N_TTM_Zprime;i++) {
-			if(TTM_Zprime_eta.at(i)>0) hZeta->Fill(TTM_Zprime_eta.at(i),Weight_XS*TTM_Mistagrate.at(i));
+			if(i==0 && TTM_Zprime_eta.at(i)>0) hZeta->Fill(TTM_Zprime_eta.at(i),Weight_XS*TTM_Mistagrate.at(i));
 		}
 		for (int i=0;i<N_TTM_Tprime;i++) {
-			if(TTM_Tprime_eta.at(i)>0) hTeta->Fill(TTM_Tprime_eta.at(i),Weight_XS*TTM_Mistagrate.at(i));
+			if(i==0 && TTM_Tprime_eta.at(i)>0) hTeta->Fill(TTM_Tprime_eta.at(i),Weight_XS*TTM_Mistagrate.at(i));
 		}
 		for (int i=0;i<N_TTM_separated_highest_per_ak8_bottoms;i++) {
 			if(TTM_separated_highest_per_ak8_bottoms_eta.at(i)>0) hboteta->Fill(TTM_separated_highest_per_ak8_bottoms_eta.at(i),Weight_XS);
 		}
 		if(TTM_highest_Ws_eta>0) hWeta->Fill(TTM_highest_Ws_eta,Weight_XS);
 		for (int i=0;i<N_TTM_AK8_top_candidates_separated;i++) {
-			if(TTM_AK8_top_candidates_separated_eta.at(i)>0) hak8sepeta->Fill(TTM_AK8_top_candidates_separated_eta.at(i),Weight_XS*TTM_Mistagrate.at(i));
+			if(i==0 && TTM_AK8_top_candidates_separated_eta.at(i)>0) hak8sepeta->Fill(TTM_AK8_top_candidates_separated_eta.at(i),Weight_XS*TTM_Mistagrate.at(i));
 		}
     if(TTM_AK8_top_candidates_highest_eta>0) hak8higheta->Fill(TTM_AK8_top_candidates_highest_eta,Weight_XS*TTM_Mistagrate_high);
     
@@ -291,42 +291,42 @@ int main()
   file->cd();
 
   //weights
-  hweightxs->Write("QCD_weightxs");
-  hmis->Write("QCD_mistagrate");
-  hmishigh->Write("QCD_mistagrate_high");
-  hsoftdrop->Write("QCD_softdropmass");
+  hweightxs->Write("Zprime_1500_1200_weightxs");
+  hmis->Write("Zprime_1500_1200_mistagrate");
+  hmishigh->Write("Zprime_1500_1200_mistagrate_high");
+  hsoftdrop->Write("Zprime_1500_1200_softdropmass");
   //mass
-  hZmass->Write("QCD_TTM_Zprime_mistag_high_M");
-  hTmass->Write("QCD_TTM_Tprime_mistag_high_M");
-  hZmassTopfirst->Write("QCD_Signal_topfirst_zprime_M");
-  hTmassTopfirst->Write("QCD_Signal_topfirst_tprime_M");
-  hbotmass->Write("QCD_TTM_bottom_M");
-  hak8sep->Write("QCD_TTM_AK8_sep_M");
-  hWmass->Write("QCD_TTM_Ws_M");
-  hak8high->Write("QCD_TTM_Ak8_high_M");
+  hZmass->Write("Zprime_1500_1200_TTM_Zprime_mistag_high_M");
+  hTmass->Write("Zprime_1500_1200_TTM_Tprime_mistag_high_M");
+  hZmassTopfirst->Write("Zprime_1500_1200_Signal_topfirst_zprime_M");
+  hTmassTopfirst->Write("Zprime_1500_1200_Signal_topfirst_tprime_M");
+  hbotmass->Write("Zprime_1500_1200_TTM_bottom_M");
+  hak8sep->Write("Zprime_1500_1200_TTM_AK8_sep_M");
+  hWmass->Write("Zprime_1500_1200_TTM_Ws_M");
+  hak8high->Write("Zprime_1500_1200_TTM_Ak8_high_M");
 	//pt
-	hZpt->Write("QCD_TTM_zprime_pt");
-  hTpt->Write("QCD_TTM_tprime_pt");
-  hbotpt->Write("QCD_TTM_bottom_pt");
-  hak8seppt->Write("QCD_TTM_AK8_sep_pt");
-  hWpt->Write("QCD_TTM_Ws_pt");
-  hak8highpt->Write("QCD_TTM_Ak8_high_pt");
-  htopspt->Write("QCD_Signal_topfirst_top_pt");
+	hZpt->Write("Zprime_1500_1200_TTM_zprime_pt");
+  hTpt->Write("Zprime_1500_1200_TTM_tprime_pt");
+  hbotpt->Write("Zprime_1500_1200_TTM_bottom_pt");
+  hak8seppt->Write("Zprime_1500_1200_TTM_AK8_sep_pt");
+  hWpt->Write("Zprime_1500_1200_TTM_Ws_pt");
+  hak8highpt->Write("Zprime_1500_1200_TTM_Ak8_high_pt");
+  htopspt->Write("Zprime_1500_1200_Signal_topfirst_top_pt");
 	//eta
-	hZeta->Write("QCD_TTM_zprime_eta");
-  hTeta->Write("QCD_TTM_tprime_eta");
-  hboteta->Write("QCD_TTM_bottom_eta");
-  hak8sepeta->Write("QCD_TTM_AK8_sep_eta");
-  hWeta->Write("QCD_TTM_Ws_eta");
-  hak8higheta->Write("QCD_TTM_Ak8_high_eta");
+	hZeta->Write("Zprime_1500_1200_TTM_zprime_eta");
+  hTeta->Write("Zprime_1500_1200_TTM_tprime_eta");
+  hboteta->Write("Zprime_1500_1200_TTM_bottom_eta");
+  hak8sepeta->Write("Zprime_1500_1200_TTM_AK8_sep_eta");
+  hWeta->Write("Zprime_1500_1200_TTM_Ws_eta");
+  hak8higheta->Write("Zprime_1500_1200_TTM_Ak8_high_eta");
   //length
-  hNmis->Write("QCD_N_mistag");
-  hNzprime->Write("QCD_N_ttm_zprime");
-  hNtprime->Write("QCD_N_ttm_tprime");
-  hNbot->Write("QCD_N_ttm_bottom");
-  hNsoft->Write("QCD_N_softdrop");
-  hNak8sep->Write("QCD_N_ak8_sep");
-  hNtops->Write("QCD_N_signal_top");
+  hNmis->Write("Zprime_1500_1200_N_mistag");
+  hNzprime->Write("Zprime_1500_1200_N_ttm_zprime");
+  hNtprime->Write("Zprime_1500_1200_N_ttm_tprime");
+  hNbot->Write("Zprime_1500_1200_N_ttm_bottom");
+  hNsoft->Write("Zprime_1500_1200_N_softdrop");
+  hNak8sep->Write("Zprime_1500_1200_N_ak8_sep");
+  hNtops->Write("Zprime_1500_1200_N_signal_top");
   
   file->Close();
   

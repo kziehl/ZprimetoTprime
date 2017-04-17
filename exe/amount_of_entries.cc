@@ -19,7 +19,7 @@ using namespace std;
 int main()
 {
 	// create root file in which the histograms will be saved
-	TFile *file = new TFile("/nfs/dust/cms/user/kziehl/plots/bkg_estimation/rootfile/number_of_entries_ak8sep_tops.root","RECREATE");
+	TFile *file = new TFile("/nfs/dust/cms/user/kziehl/plots/bkg_estimation/rootfile/number_of_entries_ak8sep_tops_16_3.root","RECREATE");
 	
 	
 	//Load data files
