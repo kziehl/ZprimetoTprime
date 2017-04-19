@@ -82,9 +82,9 @@ void RUtil::PrintRatioPlot(TH1F* histo1,TH1F* histo2,const char* titleyaxis,cons
 	histo1->SetLabelSize(0.06,"y");
 	histo1->SetTitleSize(0.07,"y");
 	histo1->SetTitleOffset(0.7,"y");
-	histo1->GetYaxis()->SetRangeUser(0,3000);
 	//draw
 	histo1->Scale(37.82);
+	histo1->GetYaxis()->SetRangeUser(0,3000);
 	histo1->Draw("histe");
 	//histo 2 style
 	histo2->SetLineWidth(2);
