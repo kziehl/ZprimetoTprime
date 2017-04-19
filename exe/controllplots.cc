@@ -19,7 +19,7 @@ using namespace std;
 int main()
 {
 	// create root file in which the histograms will be saved
-	TFile *file = new TFile("/nfs/dust/cms/user/kziehl/plots/bkg_estimation/rootfile/ak8candidate_separated_top_comparison_mistag_all.root","RECREATE");
+	TFile *file = new TFile("/nfs/dust/cms/user/kziehl/plots/bkg_estimation/rootfile/ak8candidate_separated_top_comparison_mistag_high.root","RECREATE");
 	
 	
 	//Load data files
@@ -47,7 +47,7 @@ int main()
   chain->SetBranchAddress("TTM_Mistagrate",&(TTM_Mistagrate.front()));
   
   chain->SetBranchStatus("TTM_Zprime_M",1);  
-  chain->SetBranchAddress("TTM_Zprime_M",&TTM_Zprime_M);
+  chain->SetBranchAddress("TTM_Zprime_M",&(TTM_Zprime_M.front()));
   
   chain->SetBranchStatus("N_TTM_Zprime",1);  
   chain->SetBranchAddress("N_TTM_Zprime",&N_TTM_Zprime);

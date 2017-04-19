@@ -22,7 +22,7 @@ TChain* RLoader::GetZprimeFiles(void)
 TChain* RLoader::GetQCDFiles(void)
 {
 	fLoader = new TChain("MVATree","Chain with QCD files");
-	fLoader->Add("/nfs/dust/cms/user/kziehl/processed_MC/ntuples_4_16/BKG_QCD/MC_QCD_HT_*.root");
+	fLoader->Add("/nfs/dust/cms/user/kziehl/processed_MC/ntuples_4_16/BKG_QCD/MC_QCD_Pt_*.root");
 	return fLoader;
 }
 

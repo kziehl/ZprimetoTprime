@@ -19,7 +19,7 @@ using namespace std;
 int main()
 {
 	// create root file in which the histograms will be saved
-	TFile *file = new TFile("/nfs/dust/cms/user/kziehl/plots/bkg_estimation/rootfile/analysis_Zprime_2500_1500_16_3_mistagrate_all.root","RECREATE");
+	TFile *file = new TFile("/nfs/dust/cms/user/kziehl/plots/bkg_estimation/rootfile/analysis_Zprime_2500_1500_mistagrate_new.root","RECREATE");
 	
 	
 	//Load data files
@@ -205,23 +205,48 @@ int main()
   
   for(Long64_t iEntry=0;iEntry<Nentries;iEntry++)
   {
-		chain->GetEntry(iEntry);
-		//weights
+		chain->GetEntry(iEntry); 
+		//weights 
+		double test;
+		if(N_TTM_Mistagrate>=0) test=N_TTM_Mistagrate;
+		else test=0;
+		vector<Float_t> weight(test); 
+		
+		
 		if(Weight_XS>0) hweightxs->Fill(Weight_XS);
+		
 		for (int i=0;i<N_TTM_Mistagrate;i++) {
-			if(TTM_Mistagrate.at(i)>0) hmis->Fill(TTM_Mistagrate.at(i));
+			if(TTM_Mistagrate.at(i)>0) {
+				hmis->Fill(TTM_Mistagrate.at(i));
+				std::cout << "loop number: " << i << std::endl;
+				std::cout <<"mistag:  " <<  TTM_Mistagrate.at(i) << std::endl;
+				if (i>=1) {
+					double product{1};
+					cout << "here" << endl;
+					for (int j=0;j<=i-1;j++) {
+						product*=(1-TTM_Mistagrate.at(j));
+						cout << product << endl;
+					}
+				weight.at(i)=TTM_Mistagrate.at(i)*product;
+				}
+				if (i==0){weight.at(i)=TTM_Mistagrate.at(i);
+				std::cout << "  first:  "<< weight.at(0) << std::endl;}
+			}
 		}
+		std::cout << "new" << std::endl;
+		for(auto& i: weight) std::cout << i << std::endl;
+		
 		if(TTM_Mistagrate_high>0) hmishigh->Fill(TTM_Mistagrate_high);
 		for (int i=0;i<N_TTM_RndmSDM;i++) {
 			if(TTM_RndmSDM.at(i)>0) hsoftdrop->Fill(TTM_RndmSDM.at(i));
 		}
 		//mass
 		for (int i=0;i<N_TTM_Zprime;i++) {
-			if(TTM_Zprime_M.at(i)>0) hZmass->Fill(TTM_Zprime_M.at(i),Weight_XSs*TTM_Mistagrate.at(i));
+			if(TTM_Zprime_M.at(i)>0) hZmass->Fill(TTM_Zprime_M.at(i),Weight_XSs*weight.at(i));
 		}
 		if(Signal_Topfirst_Zprime_M>0) hZmassTopfirst->Fill(Signal_Topfirst_Zprime_M,Weight_XSs);
 		for (int i=0;i<N_TTM_Tprime;i++) {
-			if(TTM_Tprime_M.at(i)>0) hTmass->Fill(TTM_Tprime_M.at(i),Weight_XSs*TTM_Mistagrate.at(i));
+			if(TTM_Tprime_M.at(i)>0) hTmass->Fill(TTM_Tprime_M.at(i),Weight_XSs*weight.at(i));
 		}
 		if(Signal_Topfirst_Tprime_M>0) hTmassTopfirst->Fill(Signal_Topfirst_Tprime_M,Weight_XSs);
 		for (int i=0;i<N_TTM_separated_highest_per_ak8_bottoms;i++) {
@@ -229,24 +254,24 @@ int main()
 		}
 		if(TTM_highest_Ws_M>0) hWmass->Fill(TTM_highest_Ws_M,Weight_XSs);
 		for (int i=0;i<N_TTM_AK8_top_candidates_separated;i++) {
-			if(TTM_AK8_top_candidates_separated_M.at(i)>0) hak8sep->Fill(TTM_AK8_top_candidates_separated_M.at(i),Weight_XSs*TTM_Mistagrate.at(i));
+			if(TTM_AK8_top_candidates_separated_M.at(i)>0) hak8sep->Fill(TTM_AK8_top_candidates_separated_M.at(i),Weight_XSs*weight.at(i));
 		}
     if(TTM_AK8_top_candidates_highest_M>0) hak8high->Fill(TTM_AK8_top_candidates_highest_M,Weight_XSs*TTM_Mistagrate_high);
     
     
     //pt
 		for (int i=0;i<N_TTM_Zprime;i++) {
-			if(TTM_Zprime_pt.at(i)>0) hZpt->Fill(TTM_Zprime_pt.at(i),Weight_XSs*TTM_Mistagrate.at(i));
+			if(TTM_Zprime_pt.at(i)>0) hZpt->Fill(TTM_Zprime_pt.at(i),Weight_XSs*weight.at(i));
 		}
 		for (int i=0;i<N_TTM_Tprime;i++) {
-			if(TTM_Tprime_pt.at(i)>0) hTpt->Fill(TTM_Tprime_pt.at(i),Weight_XSs*TTM_Mistagrate.at(i));
+			if(TTM_Tprime_pt.at(i)>0) hTpt->Fill(TTM_Tprime_pt.at(i),Weight_XSs*weight.at(i));
 		}
 		for (int i=0;i<N_TTM_separated_highest_per_ak8_bottoms;i++) {
 			if(TTM_separated_highest_per_ak8_bottoms_pt.at(i)>0) hbotpt->Fill(TTM_separated_highest_per_ak8_bottoms_pt.at(i),Weight_XSs);
 		}
 		if(TTM_highest_Ws_pt>0) hWpt->Fill(TTM_highest_Ws_pt,Weight_XSs);
 		for (int i=0;i<N_TTM_AK8_top_candidates_separated;i++) {
-			if(TTM_AK8_top_candidates_separated_pt.at(i)>0) hak8seppt->Fill(TTM_AK8_top_candidates_separated_pt.at(i),Weight_XSs*TTM_Mistagrate.at(i));
+			if(TTM_AK8_top_candidates_separated_pt.at(i)>0) hak8seppt->Fill(TTM_AK8_top_candidates_separated_pt.at(i),Weight_XSs*weight.at(i));
 		}
     if(TTM_AK8_top_candidates_highest_pt>0) hak8highpt->Fill(TTM_AK8_top_candidates_highest_pt,Weight_XSs*TTM_Mistagrate_high);
     for (int i=0;i<N_Signal_Topfirst_Tops;i++){
@@ -256,17 +281,17 @@ int main()
     
     //eta
 		for (int i=0;i<N_TTM_Zprime;i++) {
-			if(TTM_Zprime_eta.at(i)>0) hZeta->Fill(TTM_Zprime_eta.at(i),Weight_XSs*TTM_Mistagrate.at(i));
+			if(TTM_Zprime_eta.at(i)>0) hZeta->Fill(TTM_Zprime_eta.at(i),Weight_XSs*weight.at(i));
 		}
 		for (int i=0;i<N_TTM_Tprime;i++) {
-			if(TTM_Tprime_eta.at(i)>0) hTeta->Fill(TTM_Tprime_eta.at(i),Weight_XSs*TTM_Mistagrate.at(i));
+			if(TTM_Tprime_eta.at(i)>0) hTeta->Fill(TTM_Tprime_eta.at(i),Weight_XSs*weight.at(i));
 		}
 		for (int i=0;i<N_TTM_separated_highest_per_ak8_bottoms;i++) {
 			if(TTM_separated_highest_per_ak8_bottoms_eta.at(i)>0) hboteta->Fill(TTM_separated_highest_per_ak8_bottoms_eta.at(i),Weight_XSs);
 		}
 		if(TTM_highest_Ws_eta>0) hWeta->Fill(TTM_highest_Ws_eta,Weight_XSs);
 		for (int i=0;i<N_TTM_AK8_top_candidates_separated;i++) {
-			if(TTM_AK8_top_candidates_separated_eta.at(i)>0) hak8sepeta->Fill(TTM_AK8_top_candidates_separated_eta.at(i),Weight_XSs*TTM_Mistagrate.at(i));
+			if(TTM_AK8_top_candidates_separated_eta.at(i)>0) hak8sepeta->Fill(TTM_AK8_top_candidates_separated_eta.at(i),Weight_XSs*weight.at(i));
 		}
     if(TTM_AK8_top_candidates_highest_eta>0) hak8higheta->Fill(TTM_AK8_top_candidates_highest_eta,Weight_XSs*TTM_Mistagrate_high);
     
@@ -279,7 +304,7 @@ int main()
     if (N_TTM_AK8_top_candidates_separated>0) hNak8sep->Fill(N_TTM_AK8_top_candidates_separated);
     if (N_Signal_Topfirst_Tops>0) hNtops->Fill(N_Signal_Topfirst_Tops);
     if (N_TTM_RndmSDM>0) hNsoft->Fill(N_TTM_RndmSDM);
-    	
+    
      if(iEntry%100000==0)
      {
       std::cout << "Processing Event Number   " << iEntry << std::endl;
@@ -291,7 +316,7 @@ int main()
   file->cd();
 
   //weights
-  hweightxs->Write("Zprime_2500_1500_weightxs");
+  hweightxs->Write("Zprime_2500_1500_weightx");
   hmis->Write("Zprime_2500_1500_mistagrate");
   hmishigh->Write("Zprime_2500_1500_mistagrate_high");
   hsoftdrop->Write("Zprime_2500_1500_softdropmass");
